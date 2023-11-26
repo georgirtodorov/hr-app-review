@@ -24,19 +24,19 @@ Demo App for human resource management - employees management and absence reques
 
 1. **Clone the repository:**
 ```bash
-$ git clone https://github.com/georgirtodorov/hr-app-review.git
+git clone https://github.com/georgirtodorov/hr-app-review.git
 ```
 
 2. **Prepare .env and docker-compose.yml:**
 
 ```bash
-$ cd hr-app-review
-$ cp .env.example .env
-$ cp docker-compose.local.example.yml docker-compose.yml
+cd hr-app-review
+cp .env.example .env
+cp docker-compose.local.example.yml docker-compose.yml
 ```
 OPTIONAL: Configure email SMTP credentials, needed for app notifications. You can use free services like https://mailtrap.io
 ```bash
-$ vim .env
+vim .env
 #find and replace below
 MAIL_HOST={your_email_host}
 MAIL_PORT={sending_email_port}
@@ -47,43 +47,43 @@ MAIL_PASSWORD={inbox_password}
 
 3. **Build and run docker:**
 ```bash
-$ docker-compose build && docker-compose up -d
+docker-compose build && docker-compose up -d
 ```
 
 4. **Install Laravel dependencies inside the app container:**
 ```bash
-$ docker exec -it hr-app-review_laravel_1 bash
-$ composer i
+docker exec -it hr-app-review_laravel_1 bash
+composer i
 #Back to Ubuntu, press `Ctrl + D`.
 ```
 5. **Add permissions so docker can write in folders:**
 ```bash
-$ sudo chown -R $USER:$USER vendor
-$ chmod -R 777 vendor resources storage app/Console/Commands
+sudo chown -R $USER:$USER vendor
+chmod -R 777 vendor resources storage app/Console/Commands
 ```
 
 6. **Install Laravel Passports:**
 ```bash
-$ docker exec -it hr-app-review_laravel_1 bash
-$ php artisan passport:keys
+docker exec -it hr-app-review_laravel_1 bash
+php artisan passport:keys
 #Back to Ubuntu, press `Ctrl + D`.
 ```
 
 7. **Rebuild the docker**
 ```bash
-$ docker-compose down && docker-compose build && docker-compose up -d
+docker-compose down && docker-compose build && docker-compose up -d
 ```
 
 8. **Delete cached data and rebuild**
     - Sometimes cached data can prevent app to connect properly to the database, of your browser can trigger CORS policy errors.
 ```bash
-$ docker exec -it hr-app-review_laravel_1 bash
-$ composer dump-autoload
-$ php artisan clear-compiled
-$ php artisan config:clear
-$ php artisan cache:clear
+docker exec -it hr-app-review_laravel_1 bash
+composer dump-autoload
+php artisan clear-compiled
+php artisan config:clear
+php artisan cache:clear
 #Back to Ubuntu, press `Ctrl + D`.
-$ docker-compose down && docker-compose build && docker-compose up -d
+docker-compose down && docker-compose build && docker-compose up -d
 ```
 
 9. **IMPORTANT Manually add initial database data**
@@ -93,14 +93,14 @@ $ docker-compose down && docker-compose build && docker-compose up -d
 
 10. **Install angular dependencies**
 ```bash
-$ cd resources/frontend/angular2
-$ npm install --force
-#(npm install --force fails , try clean cache and retry: $ npm cache clear --force. Unfortunately we need --force, because project was started with some angular template which I don't have time to fix, despite that template is used only in the side menu) 
+cd resources/frontend/angular2
+npm install --force
+#(npm install --force fails , try clean cache and retry: npm cache clear --force. Unfortunately we need --force, because project was started with some angular template which I don't have time to fix, despite that template is used only in the side menu) 
 ```
 
 11. **Run angular on locally**
 ```bash
-$ ng serve 
+ng serve 
 ```
 Login at [localhost:4200/login](http://localhost:4200/login)
 ***
@@ -109,13 +109,13 @@ Login at [localhost:4200/login](http://localhost:4200/login)
 ## RUN LOCALLY
 1. **Start docker**
 ```bash
-$ docker-compose up -d 
+docker-compose up -d 
 ```
 
 2. **Start angular**
 ```bash
-$ cd resources/frontend/angular2 
-$ ng serve
+cd resources/frontend/angular2 
+ng serve
 ```
 
 3. **Locations**
@@ -127,8 +127,8 @@ $ ng serve
 
 4. **Local build**
 ```bash
-$ cd resources/frontend/angular2 
-$ ng build --configuration local --base-href "/" --deploy-url=/assets/angular/ && cp ../../../public/assets/angular/index.html ../../views/angular.blade.php
+cd resources/frontend/angular2 
+ng build --configuration local --base-href "/" --deploy-url=/assets/angular/ && cp ../../../public/assets/angular/index.html ../../views/angular.blade.php
 ```
 
 ***
