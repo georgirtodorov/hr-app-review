@@ -48,7 +48,6 @@ MAIL_PASSWORD={inbox_password}
 3. **Build and run docker:**
 ```bash
 $ docker-compose build && docker-compose up -d
-$ cp docker-compose.local.example.yml docker-compose.yml
 ```
 
 4. **Install Laravel dependencies inside the app container:**
