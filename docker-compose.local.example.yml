@@ -21,8 +21,8 @@ services:
     networks:
       - hr_app_review
     depends_on:
-      - mysql
-  mysql:
+      - mysqldb
+  mysqldb:
     image: 'mysql:8.0'
     ports:
       - '${DB_PORT}:3306'
@@ -33,7 +33,7 @@ services:
       MYSQL_PASSWORD: '${DB_PASSWORD}'
       MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
     volumes:
-      - 'sailmysql:/var/lib/mysql'
+      - 'sailmysqldb:/var/lib/mysql'
     networks:
       - hr_app_review
   myadmin:
@@ -43,14 +43,14 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
     links:
-      - "mysql:db"
+      - "mysqldb:db"
     depends_on:
-      - mysql
+      - mysqldb
     networks:
       - hr_app_review
 networks:
   hr_app_review:
     driver: bridge
 volumes:
-  sailmysql:
+  sailmysqldb:
     driver: local

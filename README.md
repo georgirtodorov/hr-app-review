@@ -74,23 +74,35 @@ $ php artisan passport:keys
 $ docker-compose down && docker-compose build && docker-compose up -d
 ```
 
-8. **Manually add initial database data**
+8. **Delete cached data and rebuild**
+    - Sometimes cached data can prevent app to connect properly to the database, of your browser can trigger CORS policy errors.
+```bash
+$ docker exec -it hr-app-review_laravel_1 bash
+$ composer dump-autoload
+$ php artisan clear-compiled
+$ php artisan config:clear
+$ php artisan cache:clear
+#Back to Ubuntu, press `Ctrl + D`.
+$ docker-compose down && docker-compose build && docker-compose up -d
+```
+
+9. **IMPORTANT Manually add initial database data**
 - Go to pma: [localhost:8080](http://localhost:8080)
 - log with: username: **user** password: **user**
 - **Import into pma data from database/db_for_dev_purposes.sql**
 
-9. **Install angular dependencies**
+10. **Install angular dependencies**
 ```bash
 $ cd resources/frontend/angular2
 $ npm install --force
 #(npm install --force fails , try clean cache and retry: $ npm cache clear --force. Unfortunately we need --force, because project was started with some angular template which I don't have time to fix, despite that template is used only in the side menu) 
 ```
 
-10. **Run angular on locally**
+11. **Run angular on locally**
 ```bash
 $ ng serve 
 ```
-App will be  served on [localhost:4200](http://localhost:4200)
+Login at [localhost:4200/login](http://localhost:4200/login)
 ***
 ***
 
@@ -107,7 +119,7 @@ $ ng serve
 ```
 
 3. **Locations**
-    - web: [localhost:4200](http://localhost:4200)
+    - web: [localhost:4200/login](http://localhost:4200/login)
       (email: **testmail@gmail.com** | password: **testtest**)
     - pma: [localhost:8080](http://localhost:8080)
       (user: **user** | password: **user**)
@@ -117,18 +129,6 @@ $ ng serve
 ```bash
 $ cd resources/frontend/angular2 
 $ ng build --configuration local --base-href "/" --deploy-url=/assets/angular/ && cp ../../../public/assets/angular/index.html ../../views/angular.blade.php
-```
-
-5. **CORS ERROR**
-    - If your CORS policy errors were triggered try clean cache and rebuild
-```bash
-$ docker exec -it hr-app-review_laravel_1 bash
-$ composer dump-autoload
-$ php artisan clear-compiled
-$ php artisan config:clear
-$ php artisan cache:clear
-#Back to Ubuntu, press `Ctrl + D`.
-$ docker-compose down && docker-compose build && docker-compose up -d
 ```
 
 ***
