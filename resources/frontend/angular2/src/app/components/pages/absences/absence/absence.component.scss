@@ -1,0 +1,40 @@
+mat-chip {
+    min-height: 70px;
+}
+
+.absence-option {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.absence-card {
+    .header {
+        font: 20px/32px Roboto, "Helvetica Neue", sans-serif;
+        letter-spacing: normal;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+
+        .type {
+            font-weight: 500;
+        }
+
+        .action {
+            font-weight: 300;
+        }
+    }
+
+}
+
+mat-dialog-actions {
+    display: flex;
+    justify-content: space-between;
+}
+
+.leave-details {
+    display: grid;
+    column-gap: 1%;
+    grid-template-columns:  60% 20% 20%;
+    grid-auto-flow: column;
+}

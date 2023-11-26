@@ -1,0 +1,28 @@
+<mat-dialog-content>
+    <div class="main-content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header card-header-info">
+                            <h4 class="card-title">Промяна на нива на достъп към роля</h4>
+                            <p class="card-category">{{role_name}}</p>
+                        </div>
+                        <div class="card-body">
+                            <div class="container-fluid">
+                                <role-permissions (selectedPermissionsEvent)="changedPermissions($event)"
+                                                  [permissions]="permissions"
+                                                  [role_permissions]="role_permissions"
+                                ></role-permissions>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="actions">
+                        <button mat-dialog-close class="btn">Затвори</button>
+                        <button class="btn btn-info" (click)="edit()">Запази</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</mat-dialog-content>

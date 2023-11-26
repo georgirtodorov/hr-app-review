@@ -1,0 +1,364 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div *ngIf="!loading" class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-info" [@enterFromBottom]>
+                        <div class="row">
+                            <div class="col-md-10">
+                                <h4 class="card-title">Списък на болнични бля</h4>
+                                <div class="toggle-search">
+                                    <p *ngIf="!search.current_year" class="card-category"
+                                       (click)="searching('start', 'current_year')">
+                                        <i class="material-icons">search</i> Започни търсене ...
+                                    </p>
+                                    <p *ngIf="search.current_year" class="card-category"
+                                       (click)="searching('end', 'current_year')">
+                                        <i class="material-icons">close</i> Прекрати търсенео ...
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <button class="btn btn-info btn-block btn-fill add-new" (click)="add()">
+                                    Нов ОТПУСК
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="search-grid" *ngIf="search.current_year" [@enterFromRight]>
+                        <ng-container *ngFor="let search_val of columns">
+                            <ng-container *ngIf="isSearchable(search_val[0], 'alphabetical')">
+                                <div class="" (keypress)="getTotal('current_year')">
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>{{search_val[1]}}</mat-label>
+                                        <input matInput type="text" placeholder="{{search_val[1]}}..."
+                                               [(ngModel)]="filter.current_year[search_val[0]]">
+                                        <button *ngIf="filter.current_year[search_val[0]]"
+                                                (click)="filter.current_year[search_val[0]]=''"
+                                                matSuffix mat-icon-button aria-label="Clear">
+                                            <i class="material-icons">close</i>
+                                        </button>
+                                    </mat-form-field>
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="isSearchable(search_val[0], 'dates')">
+                                <div class="" (change)="getTotal('current_year')">
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>{{search_val[1]}}</mat-label>
+                                        <input matInput [matDatepicker]="picker"
+                                               [(ngModel)]="filter.current_year[search_val[0]]">
+                                        <button *ngIf="filter.current_year[search_val[0]]"
+                                                (click)="filter.current_year[search_val[0]]=''"
+                                                matSuffix mat-icon-button aria-label="Clear">
+                                            <i class="material-icons">close</i>
+                                        </button>
+                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker></mat-datepicker>
+                                    </mat-form-field>
+                                </div>
+                            </ng-container>
+                        </ng-container>
+                        <div></div>
+                        <div></div>
+                        <div class="actions">
+                            <div></div>
+                            <button mat-raised-button type="button"
+                                    matTooltip="Нулирай търсенето" [matTooltipPosition]="'above'"
+                                    class="btn btn-link btn-sm btn-just-icon"
+                                    (click)="searching('restart', 'current_year')">
+                                <i class="material-icons">close</i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body" [@enterFromTop]>
+                        <ng-container *ngIf="sick_leave.current_year.length > 0; else no_records">
+                            <div class="content">
+                                <ng-container *ngFor="let col of columns">
+                                    <div class="content-header current-year-{{col[0]}}"
+                                         (click)="sorting('current_year', col[0], $event)">
+                                        <span>{{col[1]}}</span>
+                                        <span class="sort-arrow" *ngIf="col[0] != 'actions'">
+                                            <i class="material-icons"
+                                               [ngClass]="sort.current_year.field == col[0] && sort.current_year.action == 'ascending' ? 'active' : 'inactive'">
+                                                keyboard_arrow_up
+                                            </i>
+                                            <i class="material-icons"
+                                               [ngClass]="sort.current_year.field == col[0] && sort.current_year.action == 'descending' ? 'active' : 'inactive'">
+                                                keyboard_arrow_down
+                                            </i>
+                                        </span>
+                                    </div>
+                                </ng-container>
+                            </div>
+                            <ng-container
+                                *ngFor="let sick_leave of sick_leave.current_year |
+                                        searchText: filter.current_year.first_name: 'first_name' |
+                                        searchText: filter.current_year.last_name: 'last_name' |
+                                        searchText: filter.current_year.position: 'position' |
+                                        searchText: filter.current_year.department: 'department' |
+                                        searchText: filter.current_year.location: 'location' |
+                                        startDate: filter.current_year.start_date |
+                                        endDate: filter.current_year.end_date |
+                                        sortData: sort.current_year.field: sort.current_year.action">
+                                <div class="content" [ngClass]="notifyOngoing(sick_leave)">
+                                    <div>{{sick_leave.first_name}}</div>
+                                    <div>{{sick_leave.last_name}}</div>
+                                    <div>{{sick_leave.position_name}}</div>
+                                    <div>{{sick_leave.department_name}}</div>
+                                    <div>{{sick_leave.location_city}}</div>
+                                    <div>{{sick_leave.start_date | formatDisplayedDate}}</div>
+                                    <div>{{sick_leave.end_date | formatDisplayedDate}}</div>
+                                    <div><span
+                                        class="current_year-days">{{sick_leave.days}}</span></div>
+                                    <div>
+                                        <ng-container *ngIf="sick_leave.cost; else no_data">
+                                            <span class="current_year-cost">{{sick_leave.cost}}</span> лв.
+                                        </ng-container>
+                                    </div>
+                                    <div>{{sick_leave.name}}</div>
+                                    <div class="actions">
+
+                                        <button mat-raised-button
+                                                type="button"
+                                                matTooltip="Профил"
+                                                [matTooltipPosition]="'above'"
+                                                class="btn btn-link btn-sm btn-just-icon"
+                                                (click)="showProfile(sick_leave.user_id)"
+                                        >
+                                            <i class="material-icons profile-icon">person</i>
+                                        </button>
+                                        <button mat-raised-button
+                                                type="button"
+                                                matTooltip="Реактирай"
+                                                [matTooltipPosition]="'above'"
+                                                class="btn btn-link btn-sm btn-just-icon"
+                                                (click)="edit(sick_leave)"
+                                        >
+                                            <i class="material-icons edit">edit</i>
+                                        </button>
+                                        <button mat-raised-button
+                                                type="button"
+                                                matTooltip="Премахни"
+                                                [matTooltipPosition]="'above'"
+                                                class="btn btn-link btn-sm btn-just-icon"
+                                                (click)="delete(sick_leave)"
+                                        >
+                                            <i class="material-icons remove">close</i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </ng-container>
+                            <div class="content content-footer">
+                                <div>
+                                    <strong>Общо</strong>
+                                </div>
+                                <div>
+                                </div>
+                                <div>
+                                </div>
+                                <div>
+                                </div>
+                                <div>
+                                </div>
+                                <div>
+                                </div>
+                                <div>
+                                </div>
+                                <div>
+                                    <strong>{{summarized.current_year.days}}</strong>
+                                </div>
+                                <div>
+                                    <strong><span>{{summarized.current_year.cost}}</span> лв.</strong>
+                                </div>
+                                <div class="actions">
+                                    <div></div>
+                                    <button mat-raised-button type="button"
+                                            matTooltip="Изтегли" [matTooltipPosition]="'above'"
+                                            class="btn btn-link btn-sm btn-just-icon"
+                                            (click)="export"
+                                    >
+                                        <i class="material-icons export-icon">cloud_download</i>
+                                    </button>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="card card-plain">
+                    <div class="card-header card-header-warning">
+                        <h4 class="card-title mt-0">Регистрирани болнични за предходни години</h4>
+                        <div class="toggle-search">
+                            <p *ngIf="!search.past_years" class="card-category"
+                               (click)="searching('start', 'past_years')">
+                                <i class="material-icons">search</i> Започни търсене ...
+                            </p>
+                            <p *ngIf="search.past_years" class="card-category"
+                               (click)="searching('end', 'past_years')">
+                                <i class="material-icons">close</i> Прекрати търсенео ...
+                            </p>
+                        </div>
+                    </div>
+                    <div class="search-grid" *ngIf="search.past_years" [@enterFromRight]>
+                        <ng-container *ngFor="let search_val of columns">
+                            <ng-container *ngIf="isSearchable(search_val[0], 'alphabetical')">
+                                <div class="" (keypress)="getTotal('past_years')">
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>{{search_val[1]}}</mat-label>
+                                        <input matInput type="text" placeholder="{{search_val[1]}}..."
+                                               [(ngModel)]="filter.past_years[search_val[0]]">
+                                        <button *ngIf="filter.past_years[search_val[0]]"
+                                                (click)="filter.past_years[search_val[0]]=''"
+                                                matSuffix mat-icon-button aria-label="Clear">
+                                            <i class="material-icons">close</i>
+                                        </button>
+                                    </mat-form-field>
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="isSearchable(search_val[0], 'dates')">
+                                <div class="" (change)="getTotal('past_years')">
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>{{search_val[1]}}</mat-label>
+                                        <input matInput [matDatepicker]="picker"
+                                               [(ngModel)]="filter.past_years[search_val[0]]">
+                                        <button *ngIf="filter.past_years[search_val[0]]"
+                                                (click)="filter.past_years[search_val[0]]=''"
+                                                matSuffix mat-icon-button aria-label="Clear">
+                                            <i class="material-icons">close</i>
+                                        </button>
+                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker></mat-datepicker>
+                                    </mat-form-field>
+                                </div>
+                            </ng-container>
+                        </ng-container>
+                        <div></div>
+                        <div></div>
+                        <div class="actions">
+                            <button mat-raised-button type="button"
+                                    matTooltip="Нулирай търсенето" [matTooltipPosition]="'above'"
+                                    class="btn btn-link btn-sm btn-just-icon"
+                                    (click)="searching('restart', 'past_years')">
+                                <i class="material-icons">close</i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <ng-container *ngIf="sick_leave.past_years.length > 0; else no_records">
+                            <div class="content">
+                                <ng-container *ngFor="let col of columns">
+                                    <div class="content-header past_years-{{col[0]}}"
+                                         (click)="sorting('past_years', col[0], $event)">
+                                        <span>{{col[1]}}</span>
+                                        <span class="sort-arrow" *ngIf="col[0] != 'actions'">
+                                            <i class="material-icons"
+                                               [ngClass]="sort.past_years.field == col[0] && sort.past_years.action == 'ascending' ? 'active' : 'inactive'">
+                                                keyboard_arrow_up
+                                            </i>
+                                            <i class="material-icons"
+                                               [ngClass]="sort.past_years.field == col[0] && sort.past_years.action == 'descending' ? 'active' : 'inactive'">
+                                                keyboard_arrow_down
+                                            </i>
+                                        </span>
+                                    </div>
+                                </ng-container>
+                            </div>
+                            <ng-container
+                                *ngFor="let sick_leave of sick_leave.past_years |
+                                        searchText: filter.past_years.first_name: 'first_name' |
+                                        searchText: filter.past_years.last_name: 'last_name' |
+                                        searchText: filter.past_years.position: 'position' |
+                                        searchText: filter.past_years.department: 'department' |
+                                        searchText: filter.past_years.location: 'location' |
+                                        startDate: filter.past_years.start_date |
+                                        endDate: filter.past_years.end_date |
+                                        sortData: sort.past_years.field: sort.past_years.action |
+                                        pagination: pagination">
+                                <div class="content">
+                                    <div>{{sick_leave.first_name}}</div>
+                                    <div>{{sick_leave.last_name}}</div>
+                                    <div>{{sick_leave.position_name}}</div>
+                                    <div>{{sick_leave.department_name}}</div>
+                                    <div>{{sick_leave.location_city}}</div>
+                                    <div>{{sick_leave.start_date | formatDisplayedDate}}</div>
+                                    <div>{{sick_leave.end_date | formatDisplayedDate}}</div>
+                                    <div><span
+                                        class="past_years-days">{{sick_leave.days}}</span></div>
+                                    <div>
+                                        <ng-container *ngIf="sick_leave.cost; else no_data">
+                                            <span class="past_years-cost">{{sick_leave.cost}}</span> лв.
+                                        </ng-container>
+                                    </div>
+                                    <div class="actions">
+                                        <button mat-raised-button type="button"
+                                                matTooltip="Профил" [matTooltipPosition]="'above'"
+                                                class="btn btn-link btn-sm btn-just-icon"
+                                                (click)="showProfile(sick_leave.user_id)"
+                                        >
+                                            <i class="material-icons profile-icon">person</i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </ng-container>
+                            <div class="content content-footer">
+                                <div>
+                                    <strong>Общо</strong>
+                                </div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div>
+                                    <strong>{{summarized.past_years.days}}</strong>
+                                </div>
+                                <div>
+                                    <strong><span>{{summarized.past_years.cost}}</span> лв.</strong>
+                                </div>
+                                <div class="actions">
+                                    <button mat-raised-button type="button"
+                                            matTooltip="Изтегли" [matTooltipPosition]="'above'"
+                                            class="btn btn-link btn-sm btn-just-icon"
+                                            (click)="export()"
+                                    >
+                                        <i class="material-icons export-icon">cloud_download</i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="pagination">
+                                <mat-paginator
+                                    *ngIf="sick_leave.past_years?.length >= 5"
+                                    [showFirstLastButtons]="true"
+                                    [length]="sick_leave.past_years.length"
+                                    [pageIndex]="pagination.pageIndex"
+                                    [pageSize]="pagination.pageSize"
+                                    [pageSizeOptions]="[5, 10, 25, 100, 250]"
+                                    (page)="onPageChange($event)">
+                                </mat-paginator>
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="loading" class='loader'></div>
+</div>
+
+<ng-template #no_data>
+    <span>-</span>
+</ng-template>
+
+<ng-template #no_records>
+    <div class="no-records">
+        <h3>
+            Нямате регистрирани записи.
+        </h3>
+    </div>
+</ng-template>
+
+
+
+

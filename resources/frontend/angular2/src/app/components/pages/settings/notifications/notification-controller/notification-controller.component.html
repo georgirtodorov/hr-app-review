@@ -1,0 +1,35 @@
+<h3>{{ AbsenceActionMapper[action] }}</h3>
+
+<mat-form-field class="example-chip-list" appearance="fill">
+    <mat-chip-list #chipList aria-label="Employee selection">
+        <ng-container *ngIf="notification_list?.length > 0; else noRecords">
+            <mat-chip *ngFor="let item of notification_list" (removed)="remove(item)">
+                <span>
+                    {{ item.first_name }} {{ item.last_name }} ({{item.email}})
+                    <button matChipRemove>
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </span>
+            </mat-chip>
+        </ng-container>
+    </mat-chip-list>
+    <ng-template #noRecords>
+        <p>Няма регистрирани записи</p>
+    </ng-template>
+</mat-form-field>
+
+    <mat-form-field class="flex-item">
+        <mat-label>Служител</mat-label>
+        <input
+            type="text"
+            matInput
+            [formControl]="settingsControl"
+            [matAutocomplete]="auto"
+        >
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="add($event)">
+            <mat-option *ngFor="let option of filteredEmployees" [value]="option">
+                {{ option.first_name }} {{ option.last_name }} ({{ option.email }})
+            </mat-option>
+        </mat-autocomplete>
+    </mat-form-field>
+

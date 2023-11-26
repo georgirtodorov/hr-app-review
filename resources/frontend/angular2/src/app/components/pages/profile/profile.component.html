@@ -1,0 +1,54 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-info" style="display: flex; justify-content: space-between; align-items: flex-start;">
+                        <div>
+                            <h4 class="card-title">Досие на служител</h4>
+                            <p class="card-category">{{employee?.first_name}} {{employee?.last_name}}</p>
+                        </div>
+                        <div>
+                            <button (click)="changePassword()" [hidden]="parent_component">
+                                Смяна на парола
+                            </button>
+
+                            <button (click)="forcePasswordChange()" [hidden]="!parent_component || !canForceChangePassword">
+                                Смяна на паролата на потребителя
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="container-fluid">
+
+                            <mat-tab-group>
+
+                                <mat-tab label="Информация">
+                                    <div class="profile-data">
+                                        <profile-data [form]="form" [employee]="employee"
+                                                      [getEmployee]="getEmployee" [isDisabled]="!parent_component"></profile-data>
+                                        <profile-actions [hidden]="!parent_component" [form]="form" (profileUpdated)="onProfileUpdated($event)"></profile-actions>
+                                    </div>
+                                </mat-tab>
+
+                                <mat-tab label="Отпуск">
+                                    <div class="absence-requests">
+                                        <profile-absence [employee]="employee" [list]="absences?.requests" [archive]="absences?.archive" [isDisabled]="!parent_component"></profile-absence>
+                                    </div>
+                                </mat-tab>
+
+<!--                                Salary can be set and preview only from employees preview-->
+                                <mat-tab *ngIf="canViewSalary && parent_component" label="Заплата">
+                                    <div class="salary">
+                                        <salary [employee_id]="employee?.id" [salary]="employee?.salary?.gross_salary"></salary>
+                                    </div>
+                                </mat-tab>
+
+                            </mat-tab-group>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,40 @@
+<mat-accordion class="example-headers-align" multi>
+    <mat-expansion-panel expanded>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                Департаменти
+            </mat-panel-title>
+            <mat-panel-description>
+                Добавяне/Премахване
+                <mat-icon>dashboard</mat-icon>
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+        <ng-container *ngIf="!loading">
+            <mat-form-field class="example-chip-list" appearance="fill">
+                <mat-label>Активни</mat-label>
+                <mat-chip-list #chipList aria-label="Fruit selection">
+                    <mat-chip *ngFor="let department of departments" (removed)="remove(department)">
+                        {{department.name}}
+                        <button matChipRemove>
+                            <mat-icon>close</mat-icon>
+                        </button>
+                    </mat-chip>
+                    <input placeholder="Добави нов..."
+                           [matChipInputFor]="chipList"
+                           [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                           [matChipInputAddOnBlur]="addOnBlur"
+                           (matChipInputTokenEnd)="add($event)">
+                </mat-chip-list>
+            </mat-form-field>
+        </ng-container>
+        <div *ngIf="loading" class='loader'></div>
+    </mat-expansion-panel>
+</mat-accordion>
+
+<ng-template #no_records>
+    <div class="no-records">
+        <h3>
+            Нямате регистрирани записи.
+        </h3>
+    </div>
+</ng-template>

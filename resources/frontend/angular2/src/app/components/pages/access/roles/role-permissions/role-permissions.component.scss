@@ -1,0 +1,12 @@
+.role-permissions {
+
+    .selected-options {
+        display: grid;
+        grid-gap: 10px;
+        padding: 10px;
+    }
+
+    ::ng-deep.mat-checkbox-disabled .mat-checkbox-label {
+        color: black;
+    }
+}

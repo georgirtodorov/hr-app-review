@@ -1,0 +1,16 @@
+
+
+//some autocompete with chips
+.employee-filter {
+    width: 100%;
+    margin-top: 1rem;
+
+    .mat-chip-list {
+        margin-top: 0.5rem;
+    }
+}
+//End of some autocompete with chips
+
+.mat-chip-selected {
+    background: #0b2e13;
+}

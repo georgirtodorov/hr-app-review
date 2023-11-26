@@ -1,0 +1,17 @@
+<div class="role-users">
+    <div *ngIf="users" class="selected-options">
+        <div *ngFor="let user of (!readonly ? users : role_users)">
+            <mat-checkbox [disabled]=readonly
+                          (change)="onCheckboxChange($event, user)" [checked]="isChecked(user)">
+                {{user.first_name}} {{user.last_name}} ({{user.email}})
+            </mat-checkbox>
+        </div>
+    </div>
+</div>
+<ng-container *ngIf="readonly && role_users.length == 0">
+    <div class="no-records">
+        <h3>
+            Нямате регистрирани записи.
+        </h3>
+    </div>
+</ng-container>

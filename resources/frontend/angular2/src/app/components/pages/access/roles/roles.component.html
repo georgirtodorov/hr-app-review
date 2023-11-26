@@ -1,0 +1,99 @@
+<div class="locations-list" *ngIf="roles?.length > 0; else no_records" [@enterFromBottom]>
+    <div class=" content content-header">
+        <div>Позиция</div>
+        <div>Обхват</div>
+        <div>Потребители</div>
+        <div>Опции</div>
+    </div>
+    <div class="location content" *ngFor="let role of roles; let i = index">
+        <div>
+            {{role.name}}
+        </div>
+        <div *ngIf="role.permissions?.length != 0; else no_permissions">
+            <div class="role-permissions-actions">
+                <div>
+                    <span class="edit" (click)="editRolePermissions(role)">
+                    <button mat-raised-button type="button" class="btn btn-link btn-sm btn-just-icon">
+                        <i class="material-icons edit">edit</i>
+                    </button>Редактирай</span>
+
+                    <span class="edit" *ngIf="visible_role_permissions[i]" (click)="toggleRolePermissions(i)">
+                    <button mat-raised-button type="button" class="btn btn-link btn-sm btn-just-icon">
+                        <i class="fa fa-eye edit"></i>
+                    </button>Скрий</span>
+
+                    <span class="edit" *ngIf="!visible_role_permissions[i]" (click)="toggleRolePermissions(i)">
+                    <button mat-raised-button type="button" class="btn btn-link btn-sm btn-just-icon">
+                        <i class="fa fa-eye-slash edit"></i>
+                    </button>Преглед</span>
+                </div>
+                <div *ngIf="visible_role_permissions[i]" [@resizeAndOpacity]>
+                        <role-permissions [readonly]="true" [permissions]="permissions"
+                                          [role_permissions]="role.permissions"></role-permissions>
+                </div>
+            </div>
+        </div>
+        <ng-template #no_permissions>
+            <div class="actions">
+                    <span class="edit" (click)="editRolePermissions(role)">
+                    <button mat-raised-button type="button" class="btn btn-link btn-sm btn-just-icon">
+                        <i class="material-icons edit">edit</i>
+                    </button>Добави</span>
+            </div>
+        </ng-template>
+
+        <div *ngIf="role.users?.length != 0; else no_users">
+            <div class="role-users-actions">
+                <div>
+                <span class="edit" (click)="editRoleUsers(role)">
+                <button mat-raised-button type="button" class="btn btn-link btn-sm btn-just-icon">
+                    <i class="material-icons edit">edit</i>
+                </button>Редактирай</span>
+
+                    <span class="edit" *ngIf="visible_role_users[i]" (click)="toggleRoleUsers(i)">
+                <button mat-raised-button type="button" class="btn btn-link btn-sm btn-just-icon">
+                    <i class="fa fa-eye edit"></i>
+                </button>Скрий</span>
+
+                    <span class="edit" *ngIf="!visible_role_users[i]" (click)="toggleRoleUsers(i)">
+                <button mat-raised-button type="button" class="btn btn-link btn-sm btn-just-icon">
+                    <i class="fa fa-eye-slash edit"></i>
+                </button>Преглед</span>
+                </div>
+                <div *ngIf="visible_role_users[i]" [@resizeAndOpacity]>
+                    <role-users [readonly]="true" [users]="users" [role_users]="role.users"></role-users>
+                </div>
+            </div>
+        </div>
+        <ng-template #no_users>
+            <div class="actions">
+                    <span class="edit" (click)="editRoleUsers(role)">
+                    <button mat-raised-button type="button" class="btn btn-link btn-sm btn-just-icon">
+                        <i class="material-icons edit">edit</i>
+                    </button>Добави</span>
+            </div>
+        </ng-template>
+
+
+        <div class="actions">
+            <button mat-raised-button
+                    type="button"
+                    matTooltip="Премахни"
+                    [matTooltipPosition]="'above'"
+                    class="btn btn-link btn-sm btn-just-icon"
+                    (click)="delete(role)"
+            >
+                <i class="material-icons remove">close</i>
+            </button>
+        </div>
+    </div>
+</div>
+<add-role [permissions]="permissions"></add-role>
+<ng-template #no_records [@enterFromBottom]>
+    <div class='loader' *ngIf="!roles?.length === 0"></div>
+    <div class="no-records">
+        <h3>
+            Нямате регистрирани роли.
+        </h3>
+    </div>
+</ng-template>

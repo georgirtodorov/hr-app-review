@@ -1,0 +1,52 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="panel">
+            <mat-accordion class="example-headers-align" multi>
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Потребители
+                        </mat-panel-title>
+                        <mat-panel-description>
+                            Добавяне/Премахване
+                            <mat-icon>location_on</mat-icon>
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <user-permissions [users]="users" [roles]="roles" [permissions]="permissions"></user-permissions>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </div>
+        <div class="panel">
+            <mat-accordion class="example-headers-align" multi>
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Нива на достъп
+                        </mat-panel-title>
+                        <mat-panel-description>
+                            Добавяне/Премахване
+                            <mat-icon>location_on</mat-icon>
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <roles [permissions]="permissions" [roles]="roles" [users]="users"></roles>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </div>
+        <div class="panel">
+            <mat-accordion class="example-headers-align" multi>
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Обхват на достъп
+                        </mat-panel-title>
+                        <mat-panel-description>
+                            Добавяне/Премахване
+                            <mat-icon>location_on</mat-icon>
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <permissions [permissions]="permissions"></permissions>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </div>
+    </div>
+</div>

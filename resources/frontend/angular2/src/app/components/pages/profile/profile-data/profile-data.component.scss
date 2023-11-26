@@ -1,0 +1,27 @@
+.profile-data {
+
+    display: flex;
+    align-items: center;
+
+    .data-row {
+        display: flex;
+        column-gap: 4em;
+
+        .item {
+            flex-grow: 4
+        }
+    }
+
+    //.address,
+    //.company {
+    //    .item {
+    //        width: 25%;
+    //        min-width: 250px;
+    //    }
+    //}
+    //
+    //.identity {
+    //    width: 33%;
+    //    min-width: 250px;
+    //}
+}

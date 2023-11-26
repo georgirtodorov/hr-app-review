@@ -1,0 +1,34 @@
+<div class="content new-location">
+    <div>
+        <mat-form-field appearance="fill">
+            <mat-label>Град</mat-label>
+            <input matInput required [(ngModel)]="location.city">
+        </mat-form-field>
+    </div>
+    <div>
+        <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Адрес</mat-label>
+            <textarea matInput required [(ngModel)]="location.address"></textarea>
+        </mat-form-field>
+    </div>
+    <div>
+        <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Пощенски код</mat-label>
+            <input matInput required [(ngModel)]="location.post_code">
+        </mat-form-field>
+    </div>
+    <div>
+        <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Държава</mat-label>
+            <input matInput required [(ngModel)]="location.country">
+        </mat-form-field>
+    </div>
+    <div class="button-container">
+        <button class="btn btn-block" (click)="close()">
+            Затвори
+        </button>
+        <button class="btn btn-info" (click)="submit()">
+            Обнови
+        </button>
+    </div>
+</div>

@@ -1,0 +1,27 @@
+<form [formGroup]="permission.formGroup">
+    <div class="content new-location">
+        <div>
+            <mat-form-field appearance="fill">
+                <mat-label>Име</mat-label>
+                <input matInput formControlName="name" placeholder="Име">
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="fill">
+                <mat-label>Кратко описание</mat-label>
+                <input matInput formControlName="localized_name" placeholder="Кратко описание">
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="fill">
+                <mat-label>Пълно описание</mat-label>
+                <input matInput formControlName="localized_description" placeholder="Пълно описание">
+            </mat-form-field>
+        </div>
+        <div>
+            <button class="btn btn-info btn-block btn-fill add-new" (click)="add()">
+                Добави
+            </button>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,57 @@
+<mat-dialog-content>
+    <form [formGroup]="form">
+        <mat-form-field appearance="fill">
+            <mat-label>Вид отпуск</mat-label>
+            <mat-select formControlName='type_id'
+                        [(ngModel)]='absence.type_id'>
+                <ng-container *ngFor="let type of absence_types">
+                    <mat-option [value]="type.id" [selected]="type.id === 1">
+                        <strong>{{type.name}}</strong>
+                    </mat-option>
+                </ng-container>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Избери служител</mat-label>
+            <mat-select formControlName='employee_id'
+                        [(ngModel)]='absence.employee_id'>
+                <mat-form-field>
+                    <input matInput (keyup)="filtering($event.target.value)"
+                           placeholder="Търсене по име, фамилия, длъжност, департамент, локация...">
+                </mat-form-field>
+                <ng-container *ngFor="let employee of employees | searchEmployees: filter">
+                    <mat-option [value]="employee.id" [selected]="absence.employee_id">
+                        <strong>{{employee.first_name}} {{employee.last_name}} </strong>
+                        {{employee.position}} - {{employee.department}} ({{employee.location}})
+                    </mat-option>
+                </ng-container>
+            </mat-select>
+        </mat-form-field>
+
+
+        <mat-form-field appearance="fill">
+            <mat-label>Оставащи дни</mat-label>
+            <input
+                formControlName='days'
+                matInput type="number" placeholder="Дни" [(ngModel)]='absence.days'>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width" appearance="fill" (click)="picker.open()">
+            <mat-label>До дата</mat-label>
+            <input matInput
+                   [matDatepicker]="picker"
+                   [(ngModel)]='absence.due_date'
+                   formControlName='due_date'
+            >
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <button class="btn btn-info btn-block btn-fill" (click)="add()">
+            Добави
+        </button>
+    </form>
+</mat-dialog-content>
+
+
+

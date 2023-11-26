@@ -1,0 +1,49 @@
+<div class="locations-list" *ngIf="permissions?.length > 0; else no_records" [@enterFromBottom]>
+    <div class="content content-header">
+        <div *ngIf="canEdit">Име</div>
+        <div>Кратко описание</div>
+        <div>Пълно описание</div>
+        <div *ngIf="canEdit">Опции</div>
+    </div>
+    <div class="location content" *ngFor="let permission of permissions">
+        <div *ngIf="canEdit">
+            {{permission.name}}
+        </div>
+        <div>
+            {{permission.localized_name}}
+        </div>
+        <div>
+            {{permission.localized_description}}
+        </div>
+        <div class="actions" *ngIf="canEdit">
+            <button mat-raised-button
+                    type="button"
+                    matTooltip="Премахни"
+                    [matTooltipPosition]="'above'"
+                    class="btn btn-link btn-sm btn-just-icon"
+                    (click)="delete(permission)"
+            >
+                <i class="material-icons remove">close</i>
+            </button>
+            <button mat-raised-button
+                    type="button"
+                    matTooltip="Редактирай"
+                    [matTooltipPosition]="'above'"
+                    class="btn btn-link btn-sm btn-just-icon"
+                    (click)="edit(permission)"
+            >
+                <i class="material-icons edit">edit</i>
+            </button>
+        </div>
+    </div>
+</div>
+
+<add-permission *ngIf="canEdit"></add-permission>
+<ng-template #no_records>
+    <div class='loader' *ngIf="!permissions?.length === 0"></div>
+    <div class="no-records">
+        <h3>
+            Нямате регистрирани обхвати на достъп.
+        </h3>
+    </div>
+</ng-template>

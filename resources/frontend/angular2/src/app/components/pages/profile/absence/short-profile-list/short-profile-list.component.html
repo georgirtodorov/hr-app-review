@@ -1,0 +1,65 @@
+<div class="shor-list" *ngIf="absence_requests">
+    <mat-table [dataSource]="recent_requests" class="mat-elevation-z8" matSort>
+        <!-- Create Date Column -->
+        <ng-container matColumnDef="created">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Създадена</mat-header-cell>
+            <mat-cell *matCellDef="let element">
+                <p>{{element.created_at}}</p>
+            </mat-cell>
+        </ng-container>
+
+        <!-- Start Date Column -->
+        <ng-container matColumnDef="start_date">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Начална дата</mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.start_date}} </mat-cell>
+        </ng-container>
+
+        <!-- End Date Column-->
+        <ng-container matColumnDef="end_date">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Крайна дата</mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.end_date}} </mat-cell>
+        </ng-container>
+
+        <!-- Days Column-->
+        <ng-container matColumnDef="days">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Дни</mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.days}} </mat-cell>
+        </ng-container>
+
+        <!-- Type Column -->
+        <ng-container matColumnDef="type_name">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Вид</mat-header-cell>
+            <mat-cell *matCellDef="let element">
+                {{element.type_name}}
+                <ng-container *ngIf="element.details"> ({{element.details}})</ng-container>
+            </mat-cell>
+        </ng-container>
+
+        <!-- Approval Column-->
+        <ng-container matColumnDef="approval">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Статус</mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{humanizedStatus(element.approval)}} </mat-cell>
+        </ng-container>
+
+        <!-- Actions Column-->
+        <ng-container matColumnDef="actions">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Опции</mat-header-cell>
+            <mat-cell *matCellDef="let element">
+                <button mat-icon-button [matMenuTriggerFor]="menu">
+                    <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item (click)="edit(element)">Редактирай</button>
+                    <button mat-menu-item (click)="delete(element)">Откажи</button>
+                </mat-menu>
+            </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+    <div class="list-info pull-right">
+        *Последно заявени
+    </div>
+
+</div>

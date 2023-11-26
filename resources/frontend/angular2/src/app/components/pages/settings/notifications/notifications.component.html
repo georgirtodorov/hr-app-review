@@ -1,0 +1,27 @@
+<div class="container-fluid">
+    <div class="panel">
+        <mat-accordion class="example-headers-align" multi>
+            <mat-expansion-panel expanded>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Отпуск
+                    </mat-panel-title>
+                    <mat-panel-description>
+<!--                        Добавяне/Премахване-->
+<!--                        <mat-icon>location_on</mat-icon>-->
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <section *ngFor="let action of absence_actions">
+                    <notification-controller
+                        [action]="action"
+                        [notification_list]="notifications?.[action]"
+                        [employees]="employees"
+                        [category]="absence_requests">
+                    </notification-controller>
+                    <hr>
+                </section>
+            </mat-expansion-panel>
+        </mat-accordion>
+    </div>
+</div>
+

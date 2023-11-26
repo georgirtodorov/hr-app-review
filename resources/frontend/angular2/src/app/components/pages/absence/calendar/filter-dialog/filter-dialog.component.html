@@ -1,0 +1,100 @@
+<h1 mat-dialog-title>Filter Options</h1>
+<div mat-dialog-content>
+
+<!--    Employees filter-->
+<!--    <div class="filter-option">-->
+<!--        <h3>Employees</h3>-->
+<!--        <mat-form-field class="employee-filter">-->
+<!--            &lt;!&ndash;        <mat-form-field appearance="outline" class="employee-filter">&ndash;&gt;-->
+<!--            &lt;!&ndash;            <mat-label>Employees</mat-label>&ndash;&gt;-->
+<!--            <input matInput-->
+<!--                   placeholder="Избери от списъка..."-->
+<!--                   [matAutocomplete]="employeeAutocomplete"-->
+<!--                   [formControl]="employeeControl"-->
+<!--                   (input)="onEmployeeInputChange($event)"-->
+<!--                   (matChipInputTokenEnd)="onEmployeeChipEnd($event)">-->
+
+<!--            <mat-autocomplete #employeeAutocomplete="matAutocomplete"-->
+<!--                              (optionSelected)="onEmployeeOptionSelected($event)">-->
+<!--                <mat-option *ngFor="let employee of filteredEmployees" [value]="employee">-->
+<!--                    {{ employee.first_name }} {{ employee.last_name }}-->
+<!--                </mat-option>-->
+<!--            </mat-autocomplete>-->
+
+<!--            <mat-chip-list aria-label="Selected employees">-->
+<!--                <mat-chip *ngFor="let employee of selectedEmployees"-->
+<!--                          (removed)="removeEmployee(employee)">-->
+<!--                    {{ employee.first_name }} {{ employee.last_name }}-->
+<!--                    <mat-icon matChipRemove>cancel</mat-icon>-->
+<!--                </mat-chip>-->
+<!--            </mat-chip-list>-->
+<!--        </mat-form-field>-->
+<!--    </div>-->
+
+<!--    Departments filter-->
+<!--    <div class="filter-option">-->
+<!--        <h3>Department</h3>-->
+<!--        <mat-chip *ngFor="let department_name of department_names"-->
+<!--                  (click)="filter.updateFilter(department_name, 'department_name')"-->
+<!--                  [ngClass]="{'mat-chip-selected': filter.isSelected(department_name, 'department_name')}">-->
+<!--            <mat-icon *ngIf="filter.isSelected(department_name, 'department_name')">check</mat-icon>-->
+<!--            {{department_name}}-->
+<!--        </mat-chip>-->
+<!--    </div>-->
+
+    <div class="filter-option">
+        <h3>Location</h3>
+        <mat-chip-list aria-label="Location selection">
+            <mat-chip *ngFor="let location_city of location_cities"
+                      (click)="filter.updateFilter(location_city, 'location_city')"
+                      [ngClass]="{'mat-chip-selected': filter.isSelected(location_city, 'location_city')}">
+                <mat-icon *ngIf="filter.isSelected(location_city, 'location_city')">check</mat-icon>
+                {{location_city}}
+            </mat-chip>
+        </mat-chip-list>
+    </div>
+
+    <div class="filter-option">
+        <h3>Position</h3>
+        <mat-chip-list aria-label="Location selection">
+            <mat-chip *ngFor="let position_names of position_names"
+                      (click)="filter.updateFilter(position_names, 'position_names')"
+                      [ngClass]="{'mat-chip-selected': filter.isSelected(position_names, 'position_names')}">
+                <mat-icon *ngIf="filter.isSelected(position_names, 'position_names')">check</mat-icon>
+                {{position_names}}
+            </mat-chip>
+        </mat-chip-list>
+    </div>
+
+    <div class="filter-option">
+        <h3>Type</h3>
+        <mat-chip *ngFor="let absence_type of absence_types"
+                  (click)="filter.updateFilter(absence_type, 'absence_type')"
+                  [ngClass]="{'mat-chip-selected': filter.isSelected(absence_type, 'absence_type')}">
+            <mat-icon *ngIf="filter.isSelected(absence_type, 'absence_type')">check</mat-icon>
+            {{absence_type}}
+        </mat-chip>
+    </div>
+
+    <div class="filter-option">
+        <h3>Status</h3>
+        <mat-chip *ngFor="let absence_status of absence_status_List"
+                  (click)="filter.updateFilter(absence_status, 'absence_status')"
+                  [ngClass]="{'mat-chip-selected': filter.isSelected(absence_status, 'absence_status')}">
+            <mat-icon *ngIf="filter.isSelected(absence_status, 'absence_status')">check</mat-icon>
+            {{absence_status}}
+        </mat-chip>
+    </div>
+
+
+
+
+    <!-- Add similar divs for department, position, and employees -->
+
+
+
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="apply()">Apply Filters</button>
+    <button mat-button (click)="clearFilters()">Clear Filters</button>
+</div>

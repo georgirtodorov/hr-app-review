@@ -1,0 +1,16 @@
+<div class="role-permissions">
+    <div *ngIf="permissions || role_permissions" class="selected-options">
+        <div *ngFor="let permission of (!readonly ? permissions : role_permissions)">
+            <mat-checkbox [disabled]=readonly matTooltip="{{permission.localized_description}}"
+                          [matTooltipPosition]="'right'"
+                          (change)="onCheckboxChange($event, permission)" [checked]="isChecked(permission)">{{permission.localized_name}}</mat-checkbox>
+        </div>
+    </div>
+</div>
+<ng-container *ngIf="readonly && role_permissions.length == 0">
+    <div class="no-records">
+        <h3>
+            Нямате регистрирани записи.
+        </h3>
+    </div>
+</ng-container>

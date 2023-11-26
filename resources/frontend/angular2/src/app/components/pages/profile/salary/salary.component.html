@@ -1,0 +1,7 @@
+<div style="margin-top: 20px;">
+    <label for="salaryInput" style="margin-right: 5px;">Брутна заплата</label>
+    <input type="text" id="salaryInput" [(ngModel)]="salary" style="text-align: right;">
+    <span style="margin-left: 5px;">лв.</span>
+    <button (click)="save()" style="margin-left: 10px;">Запази</button>
+    <div id="salaryError" style="color: red; margin-left: 10px;"></div>
+</div>

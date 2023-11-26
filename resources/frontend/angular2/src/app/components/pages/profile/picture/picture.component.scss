@@ -1,0 +1,28 @@
+.picture-component {
+    display: flex;
+    flex-direction: column;
+    padding-right: 1vw;
+    padding-top: 1vw;
+
+    .avatar {
+        height: 15vw;
+        width: 15vw;
+        max-height: 300px;
+        max-width: 300px;
+        border-radius: 5%;
+        //margin: 0.3vw 1vw 0 1vw;
+        border: solid #26c6da;
+    }
+
+    .change-picture {
+        text-align: center;
+        cursor: pointer;
+    }
+
+    .max-file-size-info {
+        text-align: center;
+        font-size: 14px; /* Adjust the font size as needed */
+        color: #999; /* Adjust the text color as needed */
+        margin-top: 5px; /* Adjust the top margin to create some space between the button and the text */
+    }
+}

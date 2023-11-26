@@ -1,0 +1,86 @@
+<div class="register">
+    <div class="card">
+        <div class="card-header card-header-info">
+            <h4 class="card-title">Нов служител</h4>
+            <p class="card-category">Регистрация на нов служител</p>
+        </div>
+
+        <form [formGroup]="user.formGroup" class="container">
+            <div class="item">
+                <div class="particle">
+                    <mat-form-field>
+                        <mat-label>Име</mat-label>
+                        <input matInput formControlName="first_name" type="text" placeholder="Име">
+                    </mat-form-field>
+                    <div
+                        *ngIf="user.formGroup.get('first_name').hasError('pattern') && user.formGroup.get('first_name').touched"
+                    >
+                        <span class="text-danger">Името трябва да започва с главна буква!</span>
+                    </div>
+                </div>
+                <div class="particle">
+                    <mat-form-field>
+                        <mat-label>Фамилия</mat-label>
+                        <input matInput formControlName="last_name" type="text" placeholder="Фамилия">
+                    </mat-form-field>
+                    <div
+                        *ngIf="user.formGroup.get('last_name').hasError('pattern') && user.formGroup.get('last_name').touched"
+                    >
+                        <span class="text-danger">Фамилията трябва да започва с главна буква!</span>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="particle">
+                    <mat-form-field>
+                        <mat-label>Емейл</mat-label>
+                        <input matInput type="email" formControlName="email" placeholder="Емейл">
+                    </mat-form-field>
+                    <div *ngIf="user.formGroup.get('email').invalid && user.formGroup.get('email').touched">
+                        <span class="text-danger">Невалиден имейл адрес!</span>
+                    </div>
+                </div>
+                <div class="particle">
+                    <mat-form-field>
+                        <mat-label>Потвърди емейл</mat-label>
+                        <input matInput type="email" formControlName="email_confirmation" placeholder="Потвърди емейл">
+                    </mat-form-field>
+                    <div *ngIf="user.formGroup.hasError('emailsNotMatch')">
+                        <span class="text-danger">Имейл адреса не съвпада!</span>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="particle">
+                    <mat-form-field>
+                        <mat-label>Парола</mat-label>
+                        <input matInput type="password" formControlName="password"
+                               placeholder="Парола">
+                    </mat-form-field>
+                    <div *ngIf="user.formGroup.get('password').invalid && user.formGroup.get('password').touched">
+                        <span class="text-danger">Невалиден формат на паролата!</span>
+                        <span class="text-danger">Паролата трябва да е от минимум 6 латински символа.</span>
+                    </div>
+                </div>
+                <div class="particle">
+                    <mat-form-field>
+                        <mat-label>Потвърди парола</mat-label>
+                        <input matInput type="password" formControlName="password_confirmation"
+                               placeholder="Потвърди парола">
+                    </mat-form-field>
+                    <div *ngIf="user.formGroup.hasError('passwordNotMatch')">
+                        <span class="text-danger">Паролите не съвпадат!</span>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+    </div>
+    <div class="actions">
+        <button mat-dialog-close class="btn">Затвори</button>
+        <button mat-raised-button (click)="register()" type="submit"
+                class="btn btn-warning">Регистрирай
+        </button>
+    </div>
+</div>
+

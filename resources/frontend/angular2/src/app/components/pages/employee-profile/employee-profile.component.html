@@ -1,0 +1,218 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-info">
+                        <h4 class="card-title">Досие на служител</h4>
+                        <p class="card-category">Complete your profile</p>
+                    </div>
+                    <div class="card-body">
+                        <ng-container>
+                            <form [formGroup]="EmployeeForm" class="form mt-3">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <mat-form-field>
+                                            <mat-label>Департамент</mat-label>
+                                            <mat-select formControlName="department_id" placeholder="Департамент"
+                                                        type="text"
+                                                        [(ngModel)]="employee.department_id">
+                                                <input matInput (keyup)="filtering($event.target.value)"
+                                                       placeholder="Търси...">
+                                                <mat-option *ngFor="let department of departments | searchText: filter;"
+                                                            [value]="department.id">
+                                                    <strong>{{department.name}}</strong>
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <mat-form-field>
+                                            <mat-label>Позиция</mat-label>
+                                            <mat-select formControlName="position_id" placeholder="Позиция"
+                                                        type="text"
+                                                        [(ngModel)]="employee.position_id">
+                                                <input matInput (keyup)="filtering($event.target.value)"
+                                                       placeholder="Търси...">
+                                                <mat-option *ngFor="let position of positions | searchText: filter;"
+                                                            [value]="position.id">
+                                                    <strong>{{position.name}}</strong>
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <mat-form-field>
+                                            <mat-label>Локация</mat-label>
+                                            <mat-select formControlName="location_id" placeholder="Локация"
+                                                        type="text"
+                                                        [(ngModel)]="employee.location_id">
+                                                <input matInput (keyup)="filtering($event.target.value)"
+                                                       placeholder="Търси...">
+                                                <mat-option *ngFor="let location of locations | searchText: filter;"
+                                                            [value]="location.id">
+                                                    <strong>{{location.city}}</strong>
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <mat-form-field class="example-full-width">
+                                            <mat-label>Служебен телефон</mat-label>
+                                            <input matInput formControlName='work_phone' placeholder="Служебен телефон"
+                                                   type="text"
+                                                   [(ngModel)]="employee.work_phone">
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <mat-form-field class="example-full-width">
+                                            <mat-label>Име</mat-label>
+                                            <input matInput formControlName="first_name" placeholder="Име" type="text"
+                                                   [(ngModel)]="employee.first_name">
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <mat-form-field class="example-full-width">
+                                            <mat-label>Презиме</mat-label>
+                                            <input matInput formControlName="surname" placeholder="Презиме" type="text"
+                                                   [(ngModel)]="employee.surname">
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <mat-form-field class="example-full-width">
+                                            <mat-label>Фамилия</mat-label>
+                                            <input matInput formControlName="last_name" placeholder="Фамилия"
+                                                   type="text"
+                                                   [(ngModel)]="employee.last_name">
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <mat-form-field class="example-full-width">
+                                            <mat-label>Адрес</mat-label>
+                                            <input matInput formControlName="address" placeholder="Адрес" type="text"
+                                                   [(ngModel)]="employee.address">
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <mat-form-field class="example-full-width">
+                                            <mat-label>Град</mat-label>
+                                            <input matInput formControlName="city" placeholder="Град" type="text"
+                                                   [(ngModel)]="employee.city">
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <mat-form-field class="example-full-width">
+                                            <mat-label>Държава</mat-label>
+                                            <input matInput formControlName="country" placeholder="Държава" type="text"
+                                                   [(ngModel)]="employee.country">
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <mat-form-field class="example-full-width">
+                                            <mat-label>Пощенски код</mat-label>
+                                            <input matInput formControlName="post_code" placeholder="Пощенски код"
+                                                   type="number"
+                                                   [(ngModel)]="employee.post_code">
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <mat-form-field class="example-full-width">
+                                            <mat-label>ЕГН</mat-label>
+                                            <input matInput formControlName="pin" placeholder="ЕГН" type="number"
+                                                   [(ngModel)]="employee.pin">
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <mat-form-field class="example-full-width">
+                                            <mat-label>Личен телефон</mat-label>
+                                            <input matInput formControlName="personal_phone" placeholder="Личен телефон"
+                                                   type="text"
+                                                   [(ngModel)]="employee.personal_phone">
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <mat-form-field class="example-full-width">
+                                            <mat-label>Имейл</mat-label>
+                                            <input matInput formControlName="email" placeholder="Имейл" type="text"
+                                                   [(ngModel)]="employee.email">
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <mat-form-field class="example-full-width">
+                                            <mat-label>Назначен на</mat-label>
+                                            <input matInput formControlName="start" placeholder="Назначен на"
+                                                   type="date"
+                                                   [(ngModel)]="employee.start">
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <mat-form-field>
+                                            <mat-label>Изберете мениджър на служителя</mat-label>
+                                            <mat-select multiple formControlName="supervisors"
+                                                        placeholder="Ръководители" type="text"
+                                                        [(ngModel)]="employee.supervisors">
+                                                <mat-option *ngFor="let employee of employees" [value]="employee.id">
+                                                    {{employee.first_name}} {{employee.last_name}}
+                                                    ({{employee.position_name}})
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <!--                            <div class="row">-->
+                                <!--                                <div class="col-md-12">-->
+                                <!--                                    <label>About Me</label>-->
+                                <!--                                    <mat-form-field class="example-full-width">-->
+                                <!--                                    <textarea matInput-->
+                                <!--                                              placeholder="Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo."></textarea>-->
+                                <!--                                    </mat-form-field>-->
+                                <!--                                    <div class="form-group">-->
+                                <!--                                        <div class="form-group">-->
+                                <!--                                            <label class="bmd-label-floating"> Lamborghini Mercy, Your chick she so-->
+                                <!--                                                thirsty,-->
+                                <!--                                                I'm in that two seat Lambo.</label>-->
+                                <!--                                            <textarea class="form-control" rows="5"></textarea>-->
+                                <!--                                        </div>-->
+                                <!--                                    </div>-->
+                                <!--                                </div>-->
+                                <!--                            </div>-->
+                            </form>
+                        </ng-container>
+                        <!--                        EoF EDIT PROFILE                                                                -->
+                        <div class="actions">
+                            <button [hidden]="!parent_component" mat-dialog-close>Затвори
+                            </button>
+                            <button [hidden]="!parent_component" mat-raised-button type="submit"
+                                    (click)="delete()" class="btn btn-danger">Изтрий
+                            </button>
+                            <button [disabled]="!EmployeeForm.valid" mat-raised-button type="submit"
+                                    (click)="update()" class="btn btn-warning">Запази
+                            </button>
+                        </div>
+                        <div class="clearfix"></div>
+                        <!--                        <p>Form value: {{ UserForm.value | json }}</p>-->
+                        <!--                        <p>Form status: {{ UserForm.status | json }}</p>-->
+                    </div>
+                </div>
+            </div>
+            <!--            <div class="col-md-4" *ngIf="action != 'create'">-->
+
+
+            <!--                <button (click)="getUser()" mat-raised-button type="submit" class="btn btn-danger pull-right">User-->
+            <!--                </button>-->
+            <!--                <button (click)="getUsers()" mat-raised-button type="submit" class="btn btn-warning pull-right">Users-->
+            <!--                </button>-->
+            <!--            </div>-->
+        </div>
+    </div>
+</div>

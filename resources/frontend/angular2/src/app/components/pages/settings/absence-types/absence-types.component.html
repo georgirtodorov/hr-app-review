@@ -1,0 +1,143 @@
+<mat-accordion class="example-headers-align" multi>
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                Опции за специфициране на отпуск
+            </mat-panel-title>
+            <mat-panel-description>
+                Добавяне/Премахване
+                <mat-icon>history</mat-icon>
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <div *ngIf="!loading">
+            <div class="absence-types-list" *ngIf="absence_types.length > 0; else no_records" [@enterFromBottom]>
+                <div class="content content-header">
+                    <div>Вид</div>
+                    <div>Спецификация</div>
+                    <div>Годишен лимит</div>
+                    <div>Максимална продължителност</div>
+                    <div>Прехвърляне за следващи години</div>
+                    <div>Максимален брой дни за прехвърляне</div>
+                    <div>Записване на фирмен разход</div>
+                    <div>Одобрение</div>
+                    <div>Опции</div>
+                </div>
+                <div class="location content" *ngFor="let absence of absence_types">
+                    <div>
+                        {{absence.name}}
+                    </div>
+                    <div>
+                        {{absence.details}}
+                    </div>
+                    <div>
+                        {{absence.annual_limit}}
+                    </div>
+                    <div>
+                        {{absence.duration_limit}}
+                    </div>
+                    <div>
+                        {{absence.transferable}}
+                    </div>
+                    <div>
+                        {{absence.transferable_abount}}
+                    </div>
+                    <div>
+                        {{absence.estimate_cost}}
+                    </div>
+                    <div>
+                        {{absence.approval}}
+                    </div>
+                    <div class="actions">
+                        <button mat-raised-button
+                                type="button"
+                                matTooltip="Премахни"
+                                [matTooltipPosition]="'above'"
+                                class="btn btn-link btn-sm btn-just-icon"
+                                (click)="delete(absence.id)"
+                        >
+                            <i class="material-icons remove">close</i>
+                        </button>
+                        <button mat-raised-button
+                                type="button"
+                                matTooltip="Редактирай"
+                                [matTooltipPosition]="'above'"
+                                class="btn btn-link btn-sm btn-just-icon"
+                                (click)="edit()"
+                        >
+                            <i class="material-icons remove">edit</i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content new-absence-type">
+            <div>
+                <mat-form-field appearance="fill">
+                    <mat-label>name</mat-label>
+                    <input matInput [(ngModel)]="absence_type.name">
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field appearance="fill">
+                    <mat-label>details</mat-label>
+                    <input matInput [(ngModel)]="absence_type.details">
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field appearance="fill">
+                    <mat-label>annual_limit</mat-label>
+                    <input matInput [(ngModel)]="absence_type.annual_limit">
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field appearance="fill">
+                    <mat-label>duration_limit</mat-label>
+                    <input matInput [(ngModel)]="absence_type.duration_limit">
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field appearance="fill">
+                    <mat-label>transferable</mat-label>
+                    <input matInput [(ngModel)]="absence_type.transferable">
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field appearance="fill">
+                    <mat-label>transferable_amount</mat-label>
+                    <input matInput [(ngModel)]="absence_type.transferable_amount">
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field appearance="fill">
+                    <mat-label>estimate_cost</mat-label>
+                    <input matInput [(ngModel)]="absence_type.estimate_cost">
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field appearance="fill">
+                    <mat-label>approval</mat-label>
+                    <input matInput [(ngModel)]="absence_type.approval">
+                </mat-form-field>
+            </div>
+            <div>
+                <button class="btn btn-info btn-block btn-fill add-new" (click)="add()">
+                    Добави
+                </button>
+            </div>
+        </div>
+        <div *ngIf="loading" class='loader'></div>
+
+
+        <button>Регистрация на минали периоди </button>
+    </mat-expansion-panel>
+</mat-accordion>
+
+
+<ng-template #no_records>
+    <div class="no-records">
+        <h3>
+            Нямате регистрирани записи.
+        </h3>
+    </div>
+</ng-template>

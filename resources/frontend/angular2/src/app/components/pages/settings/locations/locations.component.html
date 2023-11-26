@@ -1,0 +1,98 @@
+<mat-accordion class="example-headers-align" multi>
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                Локации
+            </mat-panel-title>
+            <mat-panel-description>
+                Добавяне/Премахване
+                <mat-icon>location_on</mat-icon>
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div *ngIf="!loading">
+            <div class="locations-list" *ngIf="locations.length > 0; else no_records" [@enterFromBottom]>
+                <div class=" content content-header">
+                    <div>Град</div>
+                    <div>Адрес</div>
+                    <div>Пощенски код</div>
+                    <div>Държава</div>
+                    <div>Опции</div>
+                </div>
+                <div class="location content" *ngFor="let location of locations">
+                    <div>
+                        {{location.city}}
+                    </div>
+                    <div>
+                        {{location.address}}
+                    </div>
+                    <div>
+                        {{location.post_code}}
+                    </div>
+                    <div>
+                        {{location.country}}
+                    </div>
+                    <div class="actions">
+                        <button mat-raised-button
+                                type="button"
+                                matTooltip="Премахни"
+                                [matTooltipPosition]="'above'"
+                                class="btn btn-link btn-sm btn-just-icon"
+                                (click)="delete(location.id)"
+                        >
+                            <i class="material-icons remove">close</i>
+                        </button>
+                        <button mat-raised-button
+                                type="button"
+                                matTooltip="Редактирай"
+                                [matTooltipPosition]="'above'"
+                                class="btn btn-link btn-sm btn-just-icon"
+                                (click)="edit(location)"
+                        >
+                            <i class="material-icons remove">edit</i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="content new-location">
+                <div>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Град</mat-label>
+                        <input matInput required [(ngModel)]="location.city">
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Адрес</mat-label>
+                        <input matInput required [(ngModel)]="location.address">
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Пощенски код</mat-label>
+                        <input matInput required [(ngModel)]="location.post_code">
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Държава</mat-label>
+                        <input matInput required [(ngModel)]="location.country">
+                    </mat-form-field>
+                </div>
+                <div>
+                    <button class="btn btn-info btn-block btn-fill add-new" (click)="add()">
+                        Добави
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="loading" class='loader'></div>
+    </mat-expansion-panel>
+</mat-accordion>
+
+<ng-template #no_records>
+    <div class="no-records">
+        <h3>
+            Нямате регистрирани записи.
+        </h3>
+    </div>
+</ng-template>

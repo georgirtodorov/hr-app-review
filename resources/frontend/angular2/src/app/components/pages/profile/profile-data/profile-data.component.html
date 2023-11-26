@@ -1,0 +1,223 @@
+<div *ngIf="employee && employees && departments && positions && locations" class="profile-data">
+    <picture [employee]="employee"></picture>
+    <form [formGroup]="profileDataForm" class="form mt-3">
+        <div class="data-row">
+            <div class="item">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Име</mat-label>
+                    <input matInput formControlName="first_name" placeholder="Име" type="text">
+                </mat-form-field>
+                <div *ngIf="profileDataForm.get('first_name').invalid && profileDataForm.get('first_name').touched">
+                    <span class="text-danger">Невалиден формат на полето</span>
+                </div>
+            </div>
+
+            <div class="item">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Презиме</mat-label>
+                    <input matInput formControlName="surname" placeholder="Презиме" type="text">
+                </mat-form-field>
+                <div *ngIf="profileDataForm.get('surname').invalid && profileDataForm.get('surname').touched">
+                    <span class="text-danger">Невалиден формат на полето</span>
+                </div>
+            </div>
+
+            <div class="item">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Фамилия</mat-label>
+                    <input matInput formControlName="last_name" placeholder="Фамилия" type="text">
+                </mat-form-field>
+                <div *ngIf="profileDataForm.get('last_name').invalid && profileDataForm.get('last_name').touched">
+                    <span class="text-danger">Невалиден формат на полето</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="data-row">
+
+            <div class="item">
+                <mat-form-field>
+                    <mat-label>Департамент</mat-label>
+                    <mat-select formControlName="department_id" placeholder="Департамент" type="text">
+                        <mat-option
+                            *ngFor="let department of departments | searchText: filter['department_name']: 'name';"
+                            [value]="department.id">
+                            <strong>{{department.name}}</strong>
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <div
+                    *ngIf="profileDataForm.get('department_id').invalid && profileDataForm.get('department_id').touched">
+                    <span class="text-danger">Невалиден формат на полето</span>
+                </div>
+            </div>
+
+            <div class="item">
+                <mat-form-field>
+                    <mat-label>Позиция</mat-label>
+                    <mat-select formControlName="position_id" placeholder="Позиция" type="text">
+                        <mat-form-field>
+                            <input matInput (keyup)="filterPositions($event)" placeholder="Search">
+                        </mat-form-field>
+                        <mat-option *ngFor="let position of positions | searchText: filter['position_name']: 'name';"
+                                    [value]="position.id">
+                            <strong>{{position.name}}</strong>
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <div *ngIf="profileDataForm.get('position_id').invalid && profileDataForm.get('position_id').touched">
+                    <span class="text-danger">Невалиден формат на полето</span>
+                </div>
+            </div>
+
+            <div class="item">
+                <mat-form-field>
+                    <mat-label>Локация</mat-label>
+                    <mat-select formControlName="location_id" placeholder="Локация" type="text">
+                        <mat-option *ngFor="let location of locations | searchText: filter['location_city']: 'city';"
+                                    [value]="location.id">
+                            <strong>{{location.city}}</strong>
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <div *ngIf="profileDataForm.get('location_id').invalid && profileDataForm.get('location_id').touched">
+                    <span class="text-danger">Невалиден формат на полето</span>
+                </div>
+            </div>
+
+            <div class="item">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Служебен телефон</mat-label>
+                    <input matInput formControlName='work_phone' placeholder="Служебен телефон" type="text">
+                </mat-form-field>
+                <div *ngIf="profileDataForm.get('work_phone').invalid && profileDataForm.get('work_phone').touched">
+                    <span class="text-danger">Невалиден формат на полето</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="data-row">
+
+            <div class="item">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Адрес</mat-label>
+                    <input matInput formControlName="address" placeholder="Адрес" type="text">
+                </mat-form-field>
+                <div *ngIf="profileDataForm.get('address').invalid && profileDataForm.get('address').touched">
+                    <span class="text-danger">Невалиден формат на полето</span>
+                </div>
+            </div>
+
+            <div class="item">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Град</mat-label>
+                    <input matInput formControlName="city" placeholder="Град" type="text">
+                </mat-form-field>
+                <div *ngIf="profileDataForm.get('city').invalid && profileDataForm.get('city').touched">
+                    <span class="text-danger">Невалиден формат на полето</span>
+                </div>
+            </div>
+
+            <div class="item">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Държава</mat-label>
+                    <input matInput formControlName="country" placeholder="Държава" type="text">
+                </mat-form-field>
+                <div *ngIf="profileDataForm.get('country').invalid && profileDataForm.get('country').touched">
+                    <span class="text-danger">Невалиден формат на полето</span>
+                </div>
+            </div>
+
+            <div class="item">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Пощенски код</mat-label>
+                    <input matInput formControlName="post_code" placeholder="Пощенски код" type="number">
+                </mat-form-field>
+                <div *ngIf="profileDataForm.get('post_code').invalid && profileDataForm.get('post_code').touched">
+                    <span class="text-danger">Невалиден формат на полето</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="data-row">
+
+            <div class="item">
+                <mat-form-field class="example-full-width">
+                    <mat-label>ЕГН</mat-label>
+                    <input matInput formControlName="pin" placeholder="ЕГН" type="number">
+                </mat-form-field>
+                <div *ngIf="profileDataForm.get('pin').invalid && profileDataForm.get('pin').touched">
+                    <span class="text-danger">Невалиден формат на полето</span>
+                </div>
+            </div>
+
+            <div class="item">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Личен телефон</mat-label>
+                    <input matInput formControlName="personal_phone" placeholder="Личен телефон" type="text">
+                </mat-form-field>
+                <div
+                    *ngIf="profileDataForm.get('personal_phone').invalid && profileDataForm.get('personal_phone').touched">
+                    <span class="text-danger">Невалиден формат на полето</span>
+                </div>
+            </div>
+
+            <div class="item">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Имейл</mat-label>
+                    <input matInput formControlName="email" placeholder="Имейл" type="text">
+                </mat-form-field>
+                <div *ngIf="profileDataForm.get('email').invalid && profileDataForm.get('email').touched">
+                    <span class="text-danger">Невалиден формат на полето</span>
+                </div>
+            </div>
+
+            <div class="item">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Назначен на</mat-label>
+                    <input matInput formControlName="start" placeholder="Назначен на" type="date">
+                </mat-form-field>
+                <div *ngIf="profileDataForm.get('start').invalid && profileDataForm.get('start').touched">
+                    <span class="text-danger">Невалиден формат на полето</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="data-row">
+
+            <div class="item">
+                <mat-form-field>
+                    <mat-label>Изберете мениджър на служителя</mat-label>
+                    <mat-select multiple formControlName="supervisors" placeholder="Ръководители">
+                        <input matInput (keyup)="filtering($event.target.value, 'first_name')" placeholder="Търси...">
+                        <mat-option
+                            *ngFor="let employee of employees | searchText: filter['first_name']: 'first_name' | searchText: filter['last_name']: 'last_name';"
+                            [value]="employee.id">
+                            {{employee.first_name}} {{employee.last_name}}
+                            ({{employee.position_name}})
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+        </div>
+
+        <!--                                    <div class="row">-->
+        <!--                                        <div class="col-md-12">-->
+        <!--                                            <label>About Me</label>-->
+        <!--                                            <mat-form-field class="example-full-width">-->
+        <!--                                            <textarea matInput-->
+        <!--                                                      placeholder="Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo."></textarea>-->
+        <!--                                            </mat-form-field>-->
+        <!--                                            <div class="form-group">-->
+        <!--                                                <div class="form-group">-->
+        <!--                                                    <label class="bmd-label-floating"> Lamborghini Mercy, Your chick she so-->
+        <!--                                                        thirsty,-->
+        <!--                                                        I'm in that two seat Lambo.</label>-->
+        <!--                                                    <textarea class="form-control" rows="5"></textarea>-->
+        <!--                                                </div>-->
+        <!--                                            </div>-->
+        <!--                                        </div>-->
+        <!--                                    </div>-->
+    </form>
+</div>

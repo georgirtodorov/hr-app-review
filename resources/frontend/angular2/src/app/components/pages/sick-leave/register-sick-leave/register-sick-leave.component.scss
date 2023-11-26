@@ -1,0 +1,11 @@
+mat-dialog-actions {
+    display: flex;
+    justify-content: space-between;
+}
+
+.leave-details {
+    display: grid;
+    column-gap: 1%;
+    grid-template-columns:  60% 20% 20%;
+    grid-auto-flow: column;
+}

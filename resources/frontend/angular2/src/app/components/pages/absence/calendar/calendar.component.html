@@ -1,0 +1,146 @@
+<div class="absence-calendar">
+    <div class="calendar-container" id="calendar-container">
+        <div class="col-employee">
+            <div class="calendar-filter-wrapper">
+                <div class="calendar-filter">
+                    <div class="filter-wrapper">
+                        <button mat-raised-button class="filter-icon" (click)="openFilterDialog()">
+                            <mat-icon>filter_list</mat-icon>
+                            <span class="filter-count" *ngIf="filter.count() > 0">{{filter.count()}}</span>
+                        </button>
+                    </div>
+                    <button *ngIf="filter.count() > 0" mat-raised-button class="clear-filter" (click)="clearFilters()">
+                        Clear filter
+                    </button>
+                </div>
+            </div>
+
+            <div class="filter calendar-filter-wrapper">
+                <div class="department-filter">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Департамент</mat-label>
+                        <mat-select [(value)]="selectedDepartment" (selectionChange)="quickFilter($event.value)">
+<!--                            <mat-option [value]="null">-->
+<!--                                <input matInput (input)="onSearch($event.target.value)" placeholder="Search"/>-->
+<!--                            </mat-option>-->
+                            <mat-option [value]="'all'">Всички</mat-option>
+                            <mat-option [value]="employee_department">{{ employee_department }}</mat-option>
+                            <ng-container *ngFor="let department of filteredDepartments">
+                                <mat-option *ngIf="department !== employee_department"
+                                            [value]="department">{{ department }}</mat-option>
+                            </ng-container>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="employee-card" *ngFor="let employee of filtered_employees">
+
+                <div class="avatar-container">
+                    <div class="counter paid-days-left"
+                         matTooltip="Оставащи дни">{{employee.remaining_days.paid_days_left}}</div>
+                    <div matTooltip="Чакащи потвърждение"
+                         (click)="openEmployeeAbsenceRequests(employee, getWaitingApprovals(employee.absence_requests))"
+                         *ngIf="getWaitingApprovals(employee.absence_requests).length > 0"
+                         class="counter waiting-approvals">{{getWaitingApprovals(employee.absence_requests).length}}</div>
+                    <img class="avatar" [alt]="employee.first_name + ' ' + employee.last_name" [src] = "ASSETS_PATH +'img/faces/profile_picture_' + employee.id + '.jpg'" (error) ="$event.target.src = ASSETS_PATH +'img/default/profile_avatar.png'"/>
+                </div>
+                <div class="card-content">
+                    <div class="title">
+                        {{employee.first_name}} {{employee.last_name}}
+                    </div>
+                    <div class="subtitle">
+                        {{employee.position_name}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-calendar">
+            <div class="calendar-header">
+                <div class="controller-wrapper">
+                    <div class="calendar-controller">
+                        <button mat-icon-button
+                                matTooltip="{{formatDate(prev_start_date)}} - {{formatDate(prev_end_date)}}"
+                                aria-label="Предходен месец" (click)="prevMonth()" [disabled]="disableNavigation">
+                            <mat-icon class="arrow-icon">keyboard_arrow_left</mat-icon>
+                        </button>
+                        <button mat-icon-button
+                                matTooltip="{{formatDate(next_start_date)}} - {{formatDate(next_end_date)}}"
+                                aria-label="Следващ месец" (click)="nextMonth()" [disabled]="disableNavigation">
+                            <mat-icon class="arrow-icon">keyboard_arrow_right</mat-icon>
+                        </button>
+                        <div class="month">
+                            <div class="item">
+                                <mat-form-field class="date-picker">
+                                    <mat-label>Start Date</mat-label>
+                                    <input matInput [matDatepicker]="startDatePicker" [(ngModel)]="start_date"
+                                           (focus)="startDatePicker.open()" readonly>
+                                    <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+                                    <mat-datepicker #startDatePicker (closed)="generateCalendar()"></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="item">
+                                <mat-form-field class="date-picker">
+                                    <mat-label>End Date</mat-label>
+                                    <input matInput [(ngModel)]="end_date" [matDatepicker]="endDatePicker"
+                                           (focus)="endDatePicker.open()" readonly>
+                                    <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+                                    <mat-datepicker #endDatePicker (closed)="generateCalendar()"></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <button class="reset-btn" mat-raised-button (click)="restartCalendar()"
+                                [disabled]="disableNavigation">Return
+                        </button>
+                    </div>
+                </div>
+                <div class="request-actions">
+                    <button mat-button class="btn btn-round btn-fill btn-info" (click)="registerAbsence()" [hidden]="!canRegisterGlobal && !canRegisterSupervision">
+                        Регистрирай
+                    </button>
+                    <button mat-button class="btn btn-round btn-fill btn-info" (click)="addRequest()">
+                        Заяви
+                    </button>
+                </div>
+            </div>
+            <div class="calendar-content">
+                <div class="header-day" *ngFor="let date of calendar_data" [class.today]="isToday(date.date)">
+                    <div class=""
+                         aria-label="{{formatDate(date.date).split(' ')[1]}}">{{week_days[date.date.getDay()]}}</div>
+                </div>
+            </div>
+
+            <div class="calendar-content" *ngFor="let employee of filtered_employees">
+                <ng-container *ngFor="let date of calendar_data; let i = index">
+                    <ng-container *ngIf="date.absences[employee.id]; else day">
+                        <div class="calendar-day"
+                             [class.holiday]="date.custom_data.holiday?.name"
+                             [class.weekend]="date.custom_data.weekend == true"
+                             [class.approved]="date.absences[employee.id].approval == 'APPROVED'"
+                             (click)="openEmployeeAbsenceRequests(employee, date.absences[employee.id])"
+                        >
+                            <div class="day-content" [matTooltip]="date.custom_data.holiday?.name || formatDate(date.date).split(' ')[1]">
+                                <mat-icon>beach_access</mat-icon>
+                            </div>
+                        </div>
+                    </ng-container>
+                    <ng-template #day>
+                        <div class="calendar-day"
+                             [class.weekend]="date.custom_data.weekend == true"
+                             [class.holiday]="date.custom_data.holiday?.name"
+                        >
+                            <div class="day-content"
+                                 [matTooltip]="date.custom_data.holiday?.name || formatDate(date.date).split(' ')[1]">{{date.date.getDate()}}</div>
+                        </div>
+                    </ng-template>
+
+                </ng-container>
+
+            </div>
+
+        </div>
+    </div>
+</div>

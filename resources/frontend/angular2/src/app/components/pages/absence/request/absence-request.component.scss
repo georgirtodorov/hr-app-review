@@ -1,0 +1,10 @@
+#request-data {
+    .data-row {
+        display: flex;
+        column-gap: 4em;
+
+        .item {
+            flex-grow: 4
+        }
+    }
+}

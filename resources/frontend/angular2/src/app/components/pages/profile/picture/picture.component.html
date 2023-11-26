@@ -1,0 +1,19 @@
+<div class="picture-component">
+    <!--<img class="img" alt="1" src="/test/hr-app/public/assets/angular/assets/img/angular.png"/>-->
+    <!--<img class="img" alt="1" src="../../../../../assets/img/angular.png">-->
+    <!--<img class="img" alt="1" src="/assets/img/angular.png">-->
+    <!--<img class="img" alt="1" src="../../../../../../../../../public/assets/angular/assets/img/angular.png">-->
+    <!--<img class="img" alt="1" [src] = "ASSETS_PATH +'img/angular.png'"/>-->
+
+    <img (error)="$event.target.src = ASSETS_PATH +'img/default/profile_avatar.png'"
+         [alt]="employee.first_name + ' ' + employee.last_name"
+         [src]="ASSETS_PATH +'img/faces/profile_picture_' + employee.id + '.jpg'"
+         class="avatar"
+    />
+    <ng-container *ngIf="employee && canChangePicture(employee.id)" >
+        <div class="change-picture" (click)="addPicture()">Change picture</div>
+        <div class="max-file-size-info">Максимален размер: 10MB</div>
+        <input #addPic (change)="onFileSelected($event)" accept="image/*" hidden type="file"/>
+        <!--<button (click)="onUpload()">Change picture</button>-->
+    </ng-container>
+</div>

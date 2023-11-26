@@ -1,0 +1,48 @@
+<div class="example-action-buttons">
+</div>
+<mat-accordion class="example-headers-align" multi>
+    <mat-expansion-panel [expanded]="true" [hidden]="!isDisabled">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                Заявка за отпуск
+            </mat-panel-title>
+            <mat-panel-description>
+                <mat-icon>account_circle</mat-icon>
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+        <profile-absence-request (requestCreated)="onRequestCreated($event)"></profile-absence-request>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel [expanded]="true" [hidden]="!isDisabled">
+
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                Последно заявени
+            </mat-panel-title>
+            <mat-panel-description>
+                <mat-icon>date_range</mat-icon>
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+        <short-profile-list [recent_requests]="list"></short-profile-list>
+    </mat-expansion-panel>
+
+<!--    Section is for readonly from Employees preview menu-->
+    <mat-expansion-panel [hidden]="isDisabled" [expanded]="true">
+        <div class="absence-list">
+            <profile-absence-list [requests]="list"></profile-absence-list>
+        </div>
+<!--        <mat-expansion-panel-header>-->
+<!--            <mat-panel-title>-->
+<!--                Списък с отпуски-->
+<!--            </mat-panel-title>-->
+<!--            <mat-panel-description>-->
+<!--                <mat-icon>date_range</mat-icon>-->
+<!--            </mat-panel-description>-->
+<!--        </mat-expansion-panel-header>-->
+
+<!--        <div class="absence-list">-->
+<!--            <profile-absence-list [requests]="list"></profile-absence-list>-->
+<!--        </div>-->
+
+    </mat-expansion-panel>
+</mat-accordion>

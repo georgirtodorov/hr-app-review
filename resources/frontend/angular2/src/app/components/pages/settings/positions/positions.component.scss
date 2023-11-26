@@ -1,0 +1,57 @@
+$col-position: minmax(100px, 30%);
+$col-job-description: minmax(100px, 70%);
+
+$content-columns: $col-position $col-job-description;
+
+$row-bottom: 1px solid #e5e5e5;
+
+.content {
+    display: grid;
+    column-gap: 1%;
+    grid-template-columns: $content-columns;
+    grid-auto-flow: column;
+    border-bottom: $row-bottom;
+
+    // Apply to all cells
+    & > * {
+        height: 100%;
+        padding: 12px 8px;
+        vertical-align: middle;
+        flex-wrap: wrap;
+    }
+
+    &:hover {
+        background-color: #f5f5f5;
+        font-weight: 450;
+
+        .profile-icon {
+            color: #555555;
+        }
+
+        .export-icon {
+            color: #555555;
+        }
+
+        .remove {
+            color: #f44336;
+        }
+
+        .edit {
+            color: #9c27b0;
+        }
+    }
+
+    .content-header {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        column-gap: 2%;
+        font-size: 0.95rem;
+        font-weight: 500;
+
+        :hover {
+            background-color: #ececec;
+            cursor: pointer;
+        }
+    }
+}

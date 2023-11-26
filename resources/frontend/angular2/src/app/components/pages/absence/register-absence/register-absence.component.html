@@ -1,0 +1,76 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>Заявкa</mat-card-title>
+        <mat-card-subtitle>Отпуск, болнични и др..</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content id="request-data">
+        <form [formGroup]="requestForm.formGroup">
+            <div class="data-row">
+                <div class="item">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Служител</mat-label>
+                        <mat-select formControlName="employee_id"
+                                    (selectionChange)='setEmployee()'>
+                            <ng-container *ngFor="let employee of employees">
+                                <mat-option [value]="employee.id">
+                                    <strong>{{employee.first_name}} {{employee.last_name}}</strong>
+                                </mat-option>
+                            </ng-container>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="item">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Вид отпуск</mat-label>
+                        <mat-select formControlName="type_id"
+                                    (selectionChange)='calcAvailableDays($event.value)'>
+                            <ng-container *ngFor="let type of absence_types">
+                                <mat-option [value]="type.id">
+                                    <strong>{{type.name}} </strong>
+                                    {{type.details}}
+                                </mat-option>
+                            </ng-container>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+                <div class="item" *ngIf="remaining_days">
+                    <span>Оставащи дни {{selected_type}} до края на годината: <strong>{{remaining_days}}</strong></span>
+                </div>
+
+                <div class="item">
+                    <mat-form-field>
+                        <mat-label>Начална дата</mat-label>
+                        <input matInput formControlName="start_date" [matDatepicker]="startPicker"
+                               [matDatepickerFilter]="combinedFilter"
+                               (focus)="startPicker.open()">
+                        <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+                        <mat-datepicker #startPicker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+
+                <div class="item">
+                    <mat-form-field>
+                        <mat-label>Крайна дата</mat-label>
+                        <input matInput formControlName="end_date"
+                               [matDatepicker]="endPicker" [min]="requestForm.formGroup.get('start_date').value"
+                               [matDatepickerFilter]="combinedFilter"
+                               (focus)="endPicker.open()">
+                        <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+                        <mat-datepicker #endPicker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+
+                <div class="item">
+                    <button *ngIf="!is_edit" mat-button class="btn btn-round btn-fill btn-info" (click)="add()" [disabled]="submitting">
+                        Добави
+                    </button>
+                    <button *ngIf="is_edit" mat-button class="btn btn-round btn-fill btn-info" (click)="edit()">
+                        Обнови
+                    </button>
+                </div>
+            </div>
+
+        </form>
+    </mat-card-content>
+</mat-card>

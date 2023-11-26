@@ -1,0 +1,167 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-info">
+                        <div class="row">
+                            <div class="col-md-10">
+                                <h4 class="card-title ">Списък със служители</h4>
+                                <!--                                <p class="card-category"> Тези които още не са уволнени</p>-->
+                            </div>
+                            <div class="col-md-2">
+                                <button class="btn btn-info btn-block btn-fill add-new" (click)="register()">
+                                    Нов служител
+                                </button>
+                                <!--                                <button class="btn btn-info btn-block btn-fill add-new" (click)="open('create')">-->
+                                <!--                                    Нов служител-->
+                                <!--                                </button>-->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body" *ngIf="employees.length > 0">
+                        <div class="table-responsive">
+<!--                            <mat-form-field>-->
+<!--                                <input matInput (keyup)="filteringCurrent($event.target.value)"-->
+<!--                                       placeholder="Търсене по име, фамилия, длъжност, департамент, локация...">-->
+<!--                            </mat-form-field>-->
+                            <table class="table table-hover">
+                                <thead class="text-info">
+                                <th>Име</th>
+                                <th>Фамилия</th>
+                                <th>Длъжност</th>
+                                <th>Заплата</th>
+                                <th>Отпуск</th>
+                                <th>Болнични</th>
+                                <th>Опции</th>
+                                </thead>
+                                <tbody>
+                                <ng-container *ngFor="let employee of employees | searchEmployees: filter_current">
+                                    <tr>
+                                        <td>{{employee.first_name}}</td>
+                                        <td>{{employee.last_name}}</td>
+                                        <td>{{employee.position_name}}</td>
+                                        <td class="text-primary"><span *ngIf="employee.salary?.gross_salary">{{employee.salary?.gross_salary}} лв.</span></td>
+                                        <td>
+                                            <span *ngIf="getWaitingApprovals(employee.absence_requests) != 0">
+                                                <span
+                                                    title="Заявени дни, очакващи одобрение"
+                                                    style="color: orange;"
+                                                >{{getWaitingApprovals(employee.absence_requests)}}
+                                                </span> /
+                                            </span>
+                                            <span title="Оставащи дни отпуск">
+                                                {{ employee.remaining_days.paid_days_left}}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span
+                                                title="Дни през текущата година"
+                                                *ngIf="getSickLeaves(employee.absence_requests) != 0">
+                                                {{getSickLeaves(employee.absence_requests)}}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <button mat-raised-button
+                                                    type="button"
+                                                    matTooltip="Промени"
+                                                    [matTooltipPosition]="'above'"
+                                                    class="btn btn-primary btn-link btn-sm btn-just-icon"
+                                                    (click)="open(employee)"
+                                            >
+                                                <i class="material-icons">edit</i>
+                                            </button>
+                                            <button mat-raised-button
+                                                    type="button"
+                                                    matTooltip="Премахни"
+                                                    [matTooltipPosition]="'above'"
+                                                    class="btn btn-danger btn-link btn-sm btn-just-icon"
+                                                    (click)="delete(employee)"
+                                            >
+                                                <i class="material-icons">close</i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </ng-container>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12" *ngIf="past_employees.length > 0">
+                <div class="card card-plain">
+                    <div class="card-header card-header-warning">
+                        <h4 class="card-title mt-0">Бивши служители</h4>
+                        <p class="card-category"></p>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+<!--                            <mat-form-field>-->
+<!--                                <input matInput (keyup)="filteringPast($event.target.value)"-->
+<!--                                       placeholder="Търсене по име, фамилия, длъжност, департамент, локация...">-->
+<!--                            </mat-form-field>-->
+                            <table class="table table-hover">
+                                <thead class="text-warning">
+                                <th>
+                                    Име
+                                </th>
+                                <th>
+                                    Фамилия
+                                </th>
+                                <th>
+                                    Длъжност
+                                </th>
+                                <th>
+                                    Заплата
+                                </th>
+                                <th>
+                                    Локация
+                                </th>
+                                <th>
+                                    Дата
+                                </th>
+                                <th>
+                                    Опции
+                                </th>
+                                </thead>
+                                <tbody>
+                                <ng-container *ngFor="let employee of past_employees | searchEmployees: filter_past">
+                                    <tr>
+                                        <td (click)="open(employee)">{{employee.first_name}}</td>
+                                        <td (click)="open(employee)">{{employee.last_name}}</td>
+                                        <td (click)="open(employee)">{{employee.position}}</td>
+                                        <td class="text-primary"><span *ngIf="employee.salary?.gross_salary">{{employee.salary?.gross_salary}} лв.</span></td>
+                                        <td (click)="open(employee)">{{employee.location}}</td>
+                                        <td (click)="open(employee)">{{employee.end}}</td>
+                                        <td>
+                                            <button mat-raised-button
+                                                    type="button"
+                                                    matTooltip="Промени"
+                                                    [matTooltipPosition]="'above'"
+                                                    class="btn btn-primary btn-link btn-sm btn-just-icon"
+                                                    (click)="open(employee)"
+                                            >
+                                                <i class="material-icons">edit</i>
+                                            </button>
+                                            <button mat-raised-button
+                                                    type="button"
+                                                    matTooltip="Премахни"
+                                                    [matTooltipPosition]="'above'"
+                                                    class="btn btn-danger btn-link btn-sm btn-just-icon"
+                                                    (click)="delete(employee)"
+                                            >
+                                                <i class="material-icons">close</i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </ng-container>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

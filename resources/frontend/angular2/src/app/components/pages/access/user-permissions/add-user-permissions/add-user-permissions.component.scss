@@ -1,0 +1,24 @@
+$col-name: minmax(100px, 20%);
+$col-role: minmax(100px, 15%);
+$col-permissions: minmax(100px, 50%);
+$col-options: minmax(100px, 10%);
+
+$content-columns: $col-name $col-role $col-permissions $col-options;
+
+$row-bottom: 1px solid #e5e5e5;
+
+.content {
+    display: grid;
+    column-gap: 1%;
+    grid-template-columns: $content-columns;
+    grid-auto-flow: column;
+    border-bottom: $row-bottom;
+
+    // Apply to all cells
+    & > * {
+        height: 100%;
+        padding: 12px 8px;
+        vertical-align: middle;
+        flex-wrap: wrap;
+    }
+}

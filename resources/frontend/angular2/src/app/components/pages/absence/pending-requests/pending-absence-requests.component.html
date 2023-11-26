@@ -1,0 +1,57 @@
+<div class="table-wrapper">
+    <mat-table [dataSource]="absence_requests" class="mat-elevation-z8" matSort>
+
+        <!-- Create Date Column -->
+        <ng-container matColumnDef="created">
+            <mat-header-cell *matHeaderCellDef mat-sort-header class="header-cell">Създадена</mat-header-cell>
+            <mat-cell *matCellDef="let element" class="cell">{{ element.created_at }}</mat-cell>
+        </ng-container>
+
+        <!-- Id Column -->
+        <ng-container matColumnDef="start_date">
+            <mat-header-cell *matHeaderCellDef mat-sort-header class="header-cell">Начална дата</mat-header-cell>
+            <mat-cell *matCellDef="let element" class="cell">{{ element.start_date }}</mat-cell>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="end_date">
+            <mat-header-cell *matHeaderCellDef mat-sort-header class="header-cell">Крайна дата</mat-header-cell>
+            <mat-cell *matCellDef="let element" class="cell">{{ element.end_date }}</mat-cell>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="days">
+            <mat-header-cell *matHeaderCellDef mat-sort-header class="header-cell">Дни</mat-header-cell>
+            <mat-cell *matCellDef="let element" class="cell">{{ element.days }}</mat-cell>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="type_name">
+            <mat-header-cell *matHeaderCellDef mat-sort-header class="header-cell">Вид</mat-header-cell>
+            <mat-cell *matCellDef="let element" class="cell">{{ element.type_name }}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="approval">
+            <mat-header-cell *matHeaderCellDef mat-sort-header class="header-cell">Статус</mat-header-cell>
+            <mat-cell *matCellDef="let element" class="cell">{{ element.approval }}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+            <mat-header-cell *matHeaderCellDef mat-sort-header class="header-cell"></mat-header-cell>
+            <mat-cell *matCellDef="let element">
+                <button mat-icon-button (click)="changeStatus(element, approved)" [disabled]="canApprove(element.employee_id)">
+                    <mat-icon>check_circle</mat-icon>
+                </button>
+                <button mat-icon-button (click)="changeStatus(element, declined)" [disabled]="canApprove(element.employee_id)">
+                    <mat-icon>highlight_off</mat-icon>
+                </button>
+                <button mat-icon-button (click)="edit(element)" [disabled]="canBeEdited(element.employee_id)">
+                    <mat-icon>edit</mat-icon>
+                </button>
+            </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true" class="header-row"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns" class="data-row"></mat-row>
+    </mat-table>
+</div>

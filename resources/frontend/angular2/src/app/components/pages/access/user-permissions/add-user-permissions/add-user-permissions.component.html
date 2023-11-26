@@ -1,0 +1,43 @@
+<form [formGroup]="user.formGroup" class="form mt-3">
+    <div class="content new-location">
+        <div>
+            <mat-form-field appearance="fill">
+                <mat-label>Потребител</mat-label>
+                <mat-select formControlName="id" placeholder="Потребител">
+                    <ng-container *ngFor="let user of users">
+                        <mat-option *ngIf="user.roles.length === 0" [value]="user.id">
+                            {{user.first_name}} {{user.last_name}} ({{user.email}})
+                        </mat-option>
+                    </ng-container>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="fill">
+                <mat-label>Роли</mat-label>
+                <mat-select multiple formControlName="roles" placeholder="Роли">
+                    <mat-option *ngFor="let role of roles" [value]="role">
+                        {{role.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="fill">
+                <mat-label>Обхват</mat-label>
+                <mat-select multiple formControlName="permissions" placeholder="Достъп">
+                    <mat-option *ngFor="let permission of permissions" [value]="permission"
+                                matTooltip="{{permission.localized_description}}" [matTooltipPosition]="'right'"
+                                aria-label="permission scope {{permission.localized_name}}">
+                        {{permission.localized_name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div>
+            <button class="btn btn-info btn-block btn-fill add-new" (click)="add()">
+                Добави
+            </button>
+        </div>
+    </div>
+</form>

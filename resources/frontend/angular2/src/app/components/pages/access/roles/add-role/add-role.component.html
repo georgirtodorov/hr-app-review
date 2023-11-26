@@ -1,0 +1,27 @@
+<form [formGroup]="role.formGroup" class="form mt-3">
+    <div class="add-role">
+        <div>
+            <mat-form-field appearance="fill">
+                <mat-label>Име</mat-label>
+                <input matInput formControlName="name" placeholder="Име">
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="fill">
+                <mat-label>Обхват от списъка</mat-label>
+                <mat-select multiple formControlName="permissions" placeholder="Достъп">
+                    <mat-option *ngFor="let permission of permissions" [value]="permission"
+                                matTooltip="{{permission.localized_description}}" [matTooltipPosition]="'right'"
+                                aria-label="permission scope {{permission.localized_name}}">
+                        {{permission.localized_name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div>
+            <button class="btn btn-info btn-block btn-fill add-new" (click)="add()">
+                Добави
+            </button>
+        </div>
+    </div>
+</form>

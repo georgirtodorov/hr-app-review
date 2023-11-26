@@ -1,0 +1,16 @@
+<form [formGroup]="holidayForm">
+    <mat-form-field appearance="fill">
+        <input matInput formControlName="name" placeholder="Name">
+        <mat-error *ngIf="holidayForm.controls.name.hasError('required')">Name is required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Select a date</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="date" placeholder="Select a date">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error *ngIf="holidayForm.controls.date.hasError('matDatepickerParse')">Invalid date</mat-error>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" (click)="submitForm()" [disabled]="holidayForm.invalid">Submit</button>
+</form>

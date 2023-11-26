@@ -1,0 +1,102 @@
+<div class="absence-picker" *ngIf="!absence.type">
+    <mat-chip-list aria-label="absence-list">
+        <mat-chip *ngFor="let abs of absence_types" (click)="absence.type = abs.id">
+            <div class="absence-option">
+                <span>{{abs.name}}</span>
+                <span *ngIf="abs.details">({{abs.details}})</span>
+            </div>
+        </mat-chip>
+    </mat-chip-list>
+</div>
+
+<div class="absence-card" *ngIf="absence.type">
+    <div class="header">
+        <div class="type">
+            <span>{{getAbsenceType(absence.type)[0].name}}</span>
+            <span *ngIf="getAbsenceType(absence.type)[0].details"> - {{getAbsenceType(absence.type)[0].details}}</span>
+        </div>
+        <div class="action">
+            <span *ngIf="absence.id">Редактиране</span>
+            <span *ngIf="!absence.id">Регистрация</span>
+        </div>
+    </div>
+    <mat-dialog-content>
+        <form [formGroup]="form">
+            <div class="form-group">
+                <mat-form-field appearance="fill">
+                    <mat-label>Избери служител</mat-label>
+                    <mat-select formControlName='employee_id' [(ngModel)]='absence.employee_id'
+                                (selectionChange)='calcAvailableDays($event.value)'>
+                    >
+                        <mat-form-field>
+                            <input matInput (keyup)="filtering($event.target.value)"
+                                   placeholder="Търсене по име, фамилия, длъжност, департамент, локация...">
+                        </mat-form-field>
+                        <ng-container *ngFor="let employee of employees | searchEmployees: filter">
+                            <mat-option [value]="employee.id" [selected]="absence.employee_id">
+                                <strong>{{employee.first_name}} {{employee.last_name}} </strong>
+                                {{employee.position}} - {{employee.department}} ({{employee.location}})
+                            </mat-option>
+                        </ng-container>
+                    </mat-select>
+                </mat-form-field>
+                <div class="leave-details">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Избери начална и крайна дата</mat-label>
+                        <mat-date-range-input [formGroup]="form" [rangePicker]="picker" required>
+                            <input matStartDate formControlName="start_date" placeholder="Начална дата"
+                                   [(ngModel)]='absence.start_date'>
+                            <input matEndDate formControlName="end_date" placeholder="Крайна дата"
+                                   [(ngModel)]='absence.end_date'>
+                        </mat-date-range-input>
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-date-range-picker #picker></mat-date-range-picker>
+
+                        <mat-error *ngIf="form.controls.start_date.hasError('matStartDateInvalid')">Invalid start date
+                        </mat-error>
+                        <mat-error *ngIf="form.controls.end_date.hasError('matEndDateInvalid')">Invalid end date
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="fill">
+                        <mat-label>Дни</mat-label>
+                        <input matInput type="number" placeholder="Дни" [(ngModel)]='absence.days'
+                               formControlName='days'>
+                    </mat-form-field>
+
+                    <div *ngIf="absence.employee_id && absence.type == 1">
+                        <p>
+                            Полагаем опуск до днешна дата: {{available_days}}
+                        </p>
+                    </div>
+                    <mat-form-field *ngIf="absence.approval" appearance="fill">
+                        <mat-label>Разход (лв)</mat-label>
+                        <input matInput type="number" placeholder="Статус" [(ngModel)]='absence.approval_status'
+                               formControlName='status'>
+                    </mat-form-field>
+                </div>
+                <mat-dialog-actions>
+                    <div>
+                        <button mat-button mat-dialog-close mat-dialog-close="cancel"
+                                class="btn btn-round btn-fill btn-default">
+                            Отмени
+                        </button>
+                    </div>
+                    <ng-container *ngIf="absence.id; else addNew;">
+                        <div>
+                            <button mat-button class="btn btn-round btn-fill btn-info" (click)="edit()">Редактирай
+                            </button>
+                        </div>
+                    </ng-container>
+                    <ng-template #addNew>
+                        <div>
+                            <button mat-button class="btn btn-round btn-fill btn-info" (click)="addOld()">
+                                Добави
+                            </button>
+                        </div>
+                    </ng-template>
+                </mat-dialog-actions>
+            </div>
+        </form>
+    </mat-dialog-content>
+</div>

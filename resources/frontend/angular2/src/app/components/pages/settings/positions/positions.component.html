@@ -1,0 +1,78 @@
+<mat-accordion class="example-headers-align" multi>
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                Работни позиции
+            </mat-panel-title>
+            <mat-panel-description>
+                Добавяне/Премахване
+                <mat-icon>assignment_turned_in</mat-icon>
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div *ngIf="!loading">
+            <div class="locations-list" *ngIf="positions.length > 0; else no_records" [@enterFromBottom]>
+                <div class=" content content-header">
+                    <div>Длъжност</div>
+                    <div>Длъжностна характеристика</div>
+                </div>
+                <div class="position content" *ngFor="let position of positions">
+
+                    <div>
+                        {{position.name}}
+                    </div>
+                    <div>
+                        {{position.job_description}}
+                    </div>
+                    <div class="actions">
+                        <button mat-raised-button
+                                type="button"
+                                matTooltip="Премахни"
+                                [matTooltipPosition]="'above'"
+                                class="btn btn-link btn-sm btn-just-icon"
+                                (click)="delete(position.id)"
+                        >
+                            <i class="material-icons remove">close</i>
+                        </button>
+                        <button mat-raised-button
+                                type="button"
+                                matTooltip="Редактирай"
+                                [matTooltipPosition]="'above'"
+                                class="btn btn-link btn-sm btn-just-icon"
+                                (click)="edit(position)"
+                        >
+                            <i class="material-icons remove">edit</i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="content new-position">
+                <div>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Длъжност</mat-label>
+                        <input matInput required [(ngModel)]="position.name">
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Длъжностна характеристика</mat-label>
+                        <input matInput [(ngModel)]="position.job_description">
+                    </mat-form-field>
+                </div>
+                <div>
+                    <button class="btn btn-info btn-block btn-fill add-new" (click)="add()">
+                        Добави
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="loading" class='loader'></div>
+    </mat-expansion-panel>
+</mat-accordion>
+
+<ng-template #no_records>
+    <div class="no-records">
+        <h3>
+            Нямате регистрирани записи.
+        </h3>
+    </div>
+</ng-template>

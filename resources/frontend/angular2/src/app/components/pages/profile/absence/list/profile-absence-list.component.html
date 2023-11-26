@@ -1,0 +1,48 @@
+<ng-container *ngIf="requests; else noRequests">
+<mat-form-field>
+    <mat-label>Филтър...</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Платен годишен отпуск..." #input>
+</mat-form-field>
+
+
+
+    <mat-table [dataSource]="absence_requests" class="mat-elevation-z8" matSort>
+        <!-- Id Column -->
+        <ng-container matColumnDef="start_date">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Начална дата </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.start_date}} </mat-cell>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="end_date">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Крайна дата </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.end_date}} </mat-cell>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="days">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Дни </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.days}} </mat-cell>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="type_name">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Вид </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.type_name}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="approval">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Статус </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{humanizedStatus(element.approval)}} </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+
+</ng-container>
+<ng-template #noRequests>
+    <p>Няма налични записи</p>
+</ng-template>

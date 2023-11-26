@@ -1,0 +1,11 @@
+.role-users {
+
+    .selected-options {
+        display: grid;
+        padding: 10px;
+    }
+
+    ::ng-deep.mat-checkbox-disabled .mat-checkbox-label {
+        color: black;
+    }
+}

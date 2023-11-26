@@ -1,0 +1,74 @@
+<div class="locations-list" *ngIf="users?.length > 0; else no_records" [@enterFromBottom]>
+    <div class=" content content-header">
+        <div>Потребител</div>
+        <div>Роли</div>
+        <div>Допълнителен обхват</div>
+        <div>Опции</div>
+    </div>
+
+    <ng-container *ngFor="let user of users; let i = index">
+        <div class="location content" *ngIf="user.roles.length > 0 || user.permissions.length > 0">
+            <div>
+                {{user.first_name}} {{user.last_name}} ({{user.email}})
+            </div>
+            <div *ngIf="user.roles.length > 0; else no_roles">
+                <div>
+                    <p *ngFor="let role of user.roles" (click)="viewRole(role)" class="link user-roles">{{role.name}}</p>
+                </div>
+            </div>
+            <ng-template #no_roles>
+                <div class="actions" (click)="edit(user)">
+                    <button mat-raised-button type="button" class="btn btn-link btn-sm btn-just-icon">
+                        <i class="material-icons edit">edit</i>
+                    </button>
+                </div>
+            </ng-template>
+            <div *ngIf="user.permissions.length > 0; else no_permissions">
+                <role-permissions [readonly]="true"
+                                  [role_permissions]="user.permissions"></role-permissions>
+            </div>
+            <ng-template #no_permissions>
+                <div class="actions">
+                    <span class="link" (click)="edit(user)">
+                    <button mat-raised-button type="button" class="btn btn-link btn-sm btn-just-icon">
+                        <i class="material-icons edit">edit</i>
+                    </button>Добави</span>
+                </div>
+            </ng-template>
+
+            <div class="actions">
+                <button mat-raised-button
+                        type="button"
+                        matTooltip="Премахни"
+                        [matTooltipPosition]="'above'"
+                        class="btn btn-link btn-sm btn-just-icon"
+                        (click)="revoke(user.id)"
+                >
+                    <i class="material-icons remove">close</i>
+                </button>
+                <button mat-raised-button
+                        type="button"
+                        matTooltip="Редактирай"
+                        [matTooltipPosition]="'above'"
+                        class="btn btn-link btn-sm btn-just-icon"
+                        (click)="edit(user)"
+                >
+                    <i class="material-icons edit">edit</i>
+                </button>
+            </div>
+        </div>
+    </ng-container>
+
+</div>
+
+<add-user-permissions [users]="users" [roles]="roles" [permissions]="permissions"></add-user-permissions>
+
+<ng-template #no_records>
+    <div class='loader' *ngIf="!users?.length === 0"></div>
+    <div class="no-records">
+        <h3>
+            Нямате регистрирани записи.
+        </h3>
+    </div>
+</ng-template>
+

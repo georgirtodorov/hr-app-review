@@ -1,0 +1,25 @@
+/node_modules
+/public/hot
+/public/storage
+/storage/*.key
+/vendor
+.env
+.env.backup
+.phpunit.result.cache
+docker-compose.override.yml
+composer.phar
+Homestead.json
+Homestead.yaml
+npm-debug.log
+yarn-error.log
+/.idea
+/.vscode
+env.sh
+.idea
+.vscode
+docker-compose.yml
+error_log
+
+#ignore profile pictures added in dev env
+public/assets/angular/assets/img/faces
+resources/frontend/angular2/src/assets/img/faces

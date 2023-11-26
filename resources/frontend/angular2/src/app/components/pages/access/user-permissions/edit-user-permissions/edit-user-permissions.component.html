@@ -1,0 +1,55 @@
+<mat-dialog-content>
+    <div class="main-content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card" *ngIf="user">
+                        <div class="card-header card-header-info">
+                            <h4 class="card-title">Промяна на нива на достъп на потребител</h4>
+                            <p class="card-category">
+                                {{user.formGroup.get('first_name').value}} {{user.formGroup.get('last_name').value}}
+                            </p>
+                        </div>
+                        <div class="card-body">
+                            <div class="container-fluid">
+                                <form [formGroup]="user.formGroup" class="form mt-3">
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>Роли</mat-label>
+                                        <mat-select [compareWith]="roleComparison" multiple formControlName="roles"
+                                                    placeholder="Роли">
+                                            <mat-option *ngFor="let role of roles" [value]="role">
+                                                {{role.name}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+
+                                    <mat-accordion class="example-headers-align" multi>
+                                        <mat-expansion-panel expanded>
+                                            <mat-expansion-panel-header>
+                                                <mat-panel-title>
+                                                    Достъп
+                                                </mat-panel-title>
+                                                <mat-panel-description>
+                                                    <mat-icon>more_vert</mat-icon>
+                                                </mat-panel-description>
+                                            </mat-expansion-panel-header>
+                                            <role-permissions (selectedPermissionsEvent)="changedPermissions($event)"
+                                                              [permissions]="permissions"
+                                                              [role_permissions]="user.formGroup.get('permissions').value"
+                                            ></role-permissions>
+                                        </mat-expansion-panel>
+                                    </mat-accordion>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="actions">
+                        <button mat-dialog-close class="btn">Затвори</button>
+                        <button class="btn btn-info" (click)="edit()">Запази</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</mat-dialog-content>
