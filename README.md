@@ -24,13 +24,25 @@ Demo App for human resource management - employees management and absence reques
 
 1. **Clone the repository:**
 ```bash
-$ git clone https://github.com/georgirtodorov/hr-app.git
+$ git clone https://github.com/georgirtodorov/hr-app-review.git
 ```
 
-2. **Copy .env and docker-compose.yml:**
+2. **Prepare .env and docker-compose.yml:**
+
 ```bash
+$ cd hr-app-review
 $ cp .env.example .env
 $ cp docker-compose.local.example.yml docker-compose.yml
+```
+OPTIONAL: Configure email SMTP credentials, needed for app notifications. You can use free services like https://mailtrap.io
+```bash
+$ vim .env
+#find and replace below
+MAIL_HOST={your_email_host}
+MAIL_PORT={sending_email_port}
+MAIL_USERNAME={inbox_username}
+MAIL_PASSWORD={inbox_password}
+#save and exit: ESC + :wq 
 ```
 
 3. **Build and run docker:**
