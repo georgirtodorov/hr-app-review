@@ -10,6 +10,7 @@
 3. [RUN LOCALLY](#run-locally)
 4. [USED TECHNOLOGIES](#used-technologies)
 5. [APP FEATURES](#app-features)
+6. [STOP AND DELETE APP](#stop-and-delete-app)
 
 ***
 ***
@@ -89,7 +90,14 @@ docker-compose down && docker-compose build && docker-compose up -d
 9. **IMPORTANT Manually add initial database data**
 - Go to pma: [localhost:8080](http://localhost:8080)
 - log with: username: **user** password: **user**
-- **Import into pma data from database/db_for_dev_purposes.sql**
+- Import the Database data
+- Option 1: **Import file **database/db_for_dev_purposes.sql** inside 'laravel' table from PHPMyAdmin.
+- Option 2:
+```bash
+#Copy everything from db_for_dev_purposes.sql
+cat database/db_for_dev_purposes.sql
+```
+Run SQL query/queries on database 'laravel' from PHPMyAdmin using the copied data from 'database/db_for_dev_purposes.sql'
 
 10. **Install angular dependencies**
 ```bash
@@ -103,6 +111,8 @@ npm install --force
 ng serve 
 ```
 Login at [localhost:4200/login](http://localhost:4200/login)
+Email: **testmail@gmail.com** 
+Password: **testtest**
 ***
 ***
 
@@ -169,7 +179,7 @@ ng build --configuration local --base-href "/" --deploy-url=/assets/angular/ && 
 
 ![Requests](readme/requests.png)
 
-- Pending request count or clicking on request from the calendar opens the request
+- Pending request count or clicking on request from the calendar opens the request.
 
 ![Request Pending](readme/pending_request.png)
 
@@ -183,11 +193,24 @@ ng build --configuration local --base-href "/" --deploy-url=/assets/angular/ && 
 - Create/edit employees
 
 5. **SETTINGS**
-- Notifications settings
+- Notifications settings.
 - Requests settings (types, holidays, remaining days estimation logic)
 
 5. **ACCESS**
 - Control permissions,roles,etc..
 
+***
+***
+## STOP AND DELETE APP
+1. Stop docker
+```bash
+docker-compose up -d
+```
+2. Deleting app
+If you no longer need this repo locally, delete your database volumes.
+```bash
+#run 'docker volume ls' to get existing volumes
+docker volume rm hr-app-review_sailmysqldb
+```
 ***
 ***
