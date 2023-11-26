@@ -87,10 +87,11 @@ $ npm install --force
 #(npm install --force fails , try clean cache and retry: $ npm cache clear --force. Unfortunately we need --force, because project was started with some angular template which I don't have time to fix, despite that template is used only in the side menu) 
 ```
 
-10. **Install angular on locally**
+10. **Run angular on locally**
 ```bash
 $ ng serve 
 ```
+App will be  served on [localhost:4200](http://localhost:4200)
 ***
 ***
 
