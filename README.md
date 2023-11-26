@@ -52,7 +52,7 @@ $ docker-compose build && docker-compose up -d
 
 4. **Install Laravel dependencies inside the app container:**
 ```bash
-$ docker exec -it hr-app_laravel_1 bash
+$ docker exec -it hr-app-review_laravel_1 bash
 $ composer i
 #Back to Ubuntu, press `Ctrl + D`.
 ```
@@ -64,7 +64,7 @@ $ chmod -R 777 vendor resources storage app/Console/Commands
 
 6. **Install Laravel Passports:**
 ```bash
-$ docker exec -it hr-app_laravel_1 bash
+$ docker exec -it hr-app-review_laravel_1 bash
 $ php artisan passport:keys
 #Back to Ubuntu, press `Ctrl + D`.
 ```
@@ -122,7 +122,7 @@ $ ng build --configuration local --base-href "/" --deploy-url=/assets/angular/ &
 5. **CORS ERROR**
     - If your CORS policy errors were triggered try clean cache and rebuild
 ```bash
-$ docker exec -it hr-app_laravel_1 bash
+$ docker exec -it hr-app-review_laravel_1 bash
 $ composer dump-autoload
 $ php artisan clear-compiled
 $ php artisan config:clear
