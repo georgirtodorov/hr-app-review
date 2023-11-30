@@ -78,6 +78,10 @@ An ongoing project that aims to assist businesses in efficiently managing and tr
 **ACCESS**
    - Control permissions,roles,etc..
 
+<h3>PROJECT STATUS</h3>
+The project is currently in its early stages and is not yet ready for public presentation.
+
+
 ***
 ***
 ## LOCAL INSTALLATION
