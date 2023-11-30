@@ -1,10 +1,13 @@
 ***
 ***
-# #DEMO APP
+# #APPLICATION FOR EMPLOYEE MANAGEMENT AND LEAVE REQUESTS
 ***
 ***
 
 1. [APP OVERVIEW](#app-overview)
+    - [PROJECT DESCRIPTION](#project-description)
+    - [TECHNOLOGY STACK](#technology-sack)
+    - [FEATURES](#features)
 2. [LOCAL INSTALLATION](#local-installation)
     - [WSL2](#wsl2)
 3. [RUN LOCALLY](#run-locally)
@@ -16,7 +19,62 @@
 ***
 ## APP OVERVIEW
 
-Demo App for human resource management - employees management and absence request control
+<h3>PROJECT DESCRIPTION</h3>
+An ongoing project that aims to assist businesses in efficiently managing and tracking various types of absence requests. The project centers around a desktop web application designed for leave management, utilizing technologies such as Laravel, Angular, Docker, MySql, and Apache.
+
+<h3>Technology Stack</h3>
+**Laravel**
+    - Laravel-passports
+    - Laravel-permissions
+    - Middlewares
+    - Cron
+**Angular**
+    - Guards
+    - Interceptors
+    - Pipes
+    - Custom directive for permissions
+**MySQL**
+    - One-to-one and One-to-many relations
+**Docker**
+
+<h3>FEATURES</h3>
+**LOGIN**
+   - Protected with guard
+   - Reset password functionality
+
+**REQUESTS**
+   - Show number of remaining days per employee
+   - Show number of pending requests per employee if any
+   - List in calendar
+   - Filter
+   - Register for someone else if you have the needed rights
+   - Register for yourself
+   - List is loaded based on your position
+   - After register or approve/decline data is populated in the calendar without refreshing
+   - Notification on request registered/approved/declined
+
+![Requests](readme/requests.png)
+
+- Pending request count or clicking on request from the calendar opens the request.
+
+![Request Pending](readme/pending_request.png)
+
+**PROFILE**
+   - Profile data
+   - Picture
+   - Change password
+   - Requests tracking
+
+**EMPLOYEES**
+   - Create/edit employees
+
+**SETTINGS**
+   - Notifications settings.
+   - Requests settings (types, holidays, remaining days estimation logic)
+
+**ACCESS**
+   - Control permissions,roles,etc..
+
 ***
 ***
 ## LOCAL INSTALLATION
@@ -111,7 +169,7 @@ npm install --force
 ng serve 
 ```
 Login at [localhost:4200/login](http://localhost:4200/login)
-Email: **testmail@gmail.com** 
+Email: **testmail@gmail.com**
 Password: **testtest**
 ***
 ***
@@ -143,71 +201,13 @@ ng build --configuration local --base-href "/" --deploy-url=/assets/angular/ && 
 
 ***
 ***
-
-## USED TECHNOLOGIES
-1. **Laravel**
-    - Laravel-passports
-    - Laravel-permissions
-    - Middlewares
-    - Cron
-2. **Angular**
-    - Guards
-    - Interceptors
-    - Pipes
-    - Custom directive for permissions
-3. **MySQL**
-    - One-to-one and One-to-many relations
-
-***
-***
-
-## APP FEATURES
-1. **LOGIN**
-- Protected with guard
-- Reset password functionality
-
-2. **REQUESTS**
-- Show number of remaining days per employee
-- Show number of pending requests per employee if any
-- List in calendar
-- Filter
-- Register for someone else if you have the needed rights
-- Register for yourself
-- List is loaded based on your position
-- After register or approve/decline data is populated in the calendar without refreshing
-- Notification on request registered/approved/declined
-
-![Requests](readme/requests.png)
-
-- Pending request count or clicking on request from the calendar opens the request.
-
-![Request Pending](readme/pending_request.png)
-
-3. **PROFILE**
-- Profile data
-- Picture
-- Change password
-- Requests tracking
-
-4. **EMPLOYEES**
-- Create/edit employees
-
-5. **SETTINGS**
-- Notifications settings.
-- Requests settings (types, holidays, remaining days estimation logic)
-
-5. **ACCESS**
-- Control permissions,roles,etc..
-
-***
-***
 ## STOP AND DELETE APP
 1. Stop docker
 ```bash
 docker-compose up -d
 ```
 2. Deleting app
-If you no longer need this repo locally, delete your database volumes.
+   If you no longer need this repo locally, delete your database volumes.
 ```bash
 #run 'docker volume ls' to get existing volumes
 docker volume rm hr-app-review_sailmysqldb
