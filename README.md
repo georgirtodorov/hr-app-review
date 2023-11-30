@@ -20,24 +20,27 @@
 ## APP OVERVIEW
 
 <h3>PROJECT DESCRIPTION</h3>
+
 An ongoing project that aims to assist businesses in efficiently managing and tracking various types of absence requests. The project centers around a desktop web application designed for leave management, utilizing technologies such as Laravel, Angular, Docker, MySql, and Apache.
 
 <h3>Technology Stack</h3>
+
 **Laravel**
-    - Laravel-passports
-    - Laravel-permissions
-    - Middlewares
-    - Cron
+   - Laravel-passports
+   - Laravel-permissions
+   - Middlewares
+   - Cron
 **Angular**
-    - Guards
-    - Interceptors
-    - Pipes
-    - Custom directive for permissions
+   - Guards
+   - Interceptors
+   - Pipes
+   - Custom directive for permissions
 **MySQL**
-    - One-to-one and One-to-many relations
+   - One-to-one and One-to-many relations
 **Docker**
 
 <h3>FEATURES</h3>
+
 **LOGIN**
    - Protected with guard
    - Reset password functionality
