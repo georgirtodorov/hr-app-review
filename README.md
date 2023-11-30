@@ -7,7 +7,8 @@
 1. [APP OVERVIEW](#app-overview)
     - [PROJECT DESCRIPTION](#project-description)
     - [TECHNOLOGY STACK](#technology-sack)
-    - [FEATURES](#features)
+    - [FEATURES](#features)PROJECT STATUS
+    - [PROJECT STATUS](#project-status)
 2. [LOCAL INSTALLATION](#local-installation)
     - [WSL2](#wsl2)
 3. [RUN LOCALLY](#run-locally)
